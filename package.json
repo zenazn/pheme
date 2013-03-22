@@ -1,0 +1,23 @@
+{
+  "name": "pheme",
+  "version": "0.0.1",
+  "description": "Tweet mapper",
+  "contributors": [
+    "Carl Jackson <carl@avtok.com>",
+    "Peter Zhang <peter0zhang@gmail.com>"
+  ],
+  "main": "server.js",
+  "scripts": {
+    "test": "echo Tests? Go away. && exit 1"
+  },
+  "dependencies": {
+    "express": "~3.1",
+    "oauth": "~0.9",
+    "socket.io": "~0.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/zenazn/pheme.git"
+  },
+  "license": "BSD"
+}

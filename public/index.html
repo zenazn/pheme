@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Testing</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io.connect('http://localhost:3000');
+      var replay = socket.of('/replay');
+      replay.emit('load', '1.json');
+      replay.on('data', function (data) {
+        console.log(data);
+      });
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

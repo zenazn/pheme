@@ -1,2 +1,4 @@
 node_modules
 secrets.json
+traces
+npm-debug.log

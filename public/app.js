@@ -1,70 +1,71 @@
 // Tweet Object
 function Tweet(data, marker) {
-    this.lat = data.geo.coordinates[0];
-    this.lon = data.geo.coordinates[1];
-    this.marker = marker;
-    this.tweet = data;
+  this.lat = data.geo.coordinates[1];
+  this.lon = data.geo.coordinates[0];
+  this.marker = marker;
+  this.tweet = data;
 }
 
 // Geographical Distance Metric
 // Returns euclidean distance between two tweets
 function geoMetric(t1, t2) {
-    return Math.sqrt(Math.pow(t1.lat - t2.lat, 2) + Math.pow(t1.lon - t2.lon, 2));
+  return Math.sqrt(Math.pow(t1.lat - t2.lat, 2) + Math.pow(t1.lon - t2.lon, 2));
 }
 
 // Graph Object
 function Graph(metric) {
-    this.distance = metric;
-    this.vertices = [];
-    this.edges = [];
+  this.distance = metric;
+  this.vertices = [];
+  this.edges = [];
 }
 
 // Update graph with new vertex, keepin edges sorted in descending order
 // by length
 Graph.prototype.update = function (vertex) {
-    this.vertices.forEach(function(element, index, array) {
-        this.edges.push([this.distance(vertex, element), index, (array.length + 1)]);
-        this.edges.sort(function(a,b) {return b[0]-a[0]});
-    });
-    this.vertices.push(vertex);
+  this.vertices.forEach(function(element, index, array) {
+    this.edges.push([this.distance(vertex, element), index, (array.length + 1)]);
+    this.edges.sort(function(a,b) {return b[0]-a[0]});
+  });
+  this.vertices.push(vertex);
 };
 
 // Identify clusters in graph, with edges of length no
 // greater than maxLength
 Graph.prototype.cluster = function(maxLength) {
-    var edges = this.edges.slice(0);
-    var clusters = [];
-    this.vertices.forEach(function(element, index, array) {
-        clusters.push([index]);
+  var edges = this.edges.slice(0);
+  var clusters = [];
+  this.vertices.forEach(function(element, index, array) {
+    clusters.push([index]);
+  });
+
+  curEdge = edges.pop();
+  while(curEdge < maxLength) {
+    var el1 = this.vertices[curEdge[1]];
+    var el2 = this.vertices[curEdge[2]];
+    var cluster1;
+    var cluster2;
+    clusters.forEach(function(element, index, array) {
+      if(element.indexOf(el1) != -1) {
+        cluster1 = index;
+      }
+      else if(element.indexOf(el2) != -1) {
+        cluster2 = index;
+      }
     });
-
+    var newCluster = clusters[cluster1].concat(clusters[cluster2]);
+    clusters.splice(cluster1, 1);
+    clusters.splice(cluster2, 1);
+    clusters.push(newCluster);
     curEdge = edges.pop();
-    while(curEdge < maxLength) {
-        var el1 = this.vertices[curEdge[1]];
-        var el2 = this.vertices[curEdge[2]];
-        var cluster1;
-        var cluster2;
-        clusters.forEach(function(element, index, array) {
-            if(element.indexOf(el1) != -1) {
-                cluster1 = index;
-            }
-            else if(element.indexOf(el2) != -1) {
-                cluster2 = index;
-            }
-        });
-        var newCluster = clusters[cluster1].concat(clusters[cluster2]);
-        clusters.splice(cluster1, 1);
-        clusters.splice(cluster2, 1);
-        clusters.push(newCluster);
-        curEdge = edges.pop();
-    }
+  }
 
-    return clusters;
+  return clusters;
 };
 
 !function() {
   "use strict";
 
+  var graph = new Graph(geoMetric);
   var socket = io.connect('http://localhost:3000');
   var twitter = socket.of('/twitter');
   var replay = socket.of('/replay');
@@ -135,6 +136,10 @@ Graph.prototype.cluster = function(maxLength) {
         animation: google.maps.Animation.DROP,
         position: new google.maps.LatLng(c[0], c[1])
       });
+      
+      var tweet = new Tweet(d, marker);
+      graph.update(tweet);
+      console.log(graph.cluster);
     });
   });
 }();

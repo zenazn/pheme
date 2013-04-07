@@ -1,3 +1,17 @@
+// Tweet Object
+function Tweet(data, marker) {
+    this.lat = data.geo.coordinates[0];
+    this.lon = data.geo.coordinates[1];
+    this.marker = marker;
+    this.tweet = data;
+} 
+
+// Geographical Distance Metric 
+// Returns euclidean distance between two tweets
+function geoMetric(t1, t2) {
+    return Math.sqrt(Math.pow(t1.lat - t2.lat, 2) + Math.pow(t1.lon - t2.lon, 2));
+}
+
 // Graph Object
 function Graph(metric) {
     this.distance = metric;

@@ -1,3 +1,53 @@
+// Graph Object
+function Graph(metric) {
+    this.distance = metric;
+    this.vertices = [];
+    this.edges = [];
+}
+
+// Update graph with new vertex, keepin edges sorted in descending order
+// by length
+Graph.prototype.update = function (vertex) {
+    this.vertices.forEach(function(element, index, array) {
+        this.edges.push([this.distance(vertex, element), index, (array.length + 1)]);
+        this.edges.sort(function(a,b) {return b[0]-a[0]});
+    });
+    this.vertices.push(vertex);
+};
+
+// Identify clusters in graph, with edges of length no
+// greater than maxLength
+Graph.prototype.cluster = function(maxLength) {
+    var edges = this.edges.slice(0);
+    var clusters = [];
+    this.vertices.forEach(function(element, index, array) {
+        clusters.push([index]);
+    });
+
+    curEdge = edges.pop();
+    while(curEdge < maxLength) {
+        var el1 = this.vertices[curEdge[1]];
+        var el2 = this.vertices[curEdge[2]];
+        var cluster1;
+        var cluster2;
+        clusters.forEach(function(element, index, array) {
+            if(element.indexOf(el1) != -1) {
+                cluster1 = index;
+            }
+            else if(element.indexOf(el2) != -1) {
+                cluster2 = index;
+            }
+        });
+        var newCluster = clusters[cluster1].concat(clusters[cluster2]);
+        clusters.splice(cluster1, 1);
+        clusters.splice(cluster2, 1);
+        clusters.push(newCluster);
+        curEdge = edges.pop();
+    }
+
+    return clusters;
+};
+
 !function() {
   "use strict";
 

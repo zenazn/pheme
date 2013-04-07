@@ -2,8 +2,8 @@
 
 var fs      = require('fs');
 var express = require('express');
-var twitter = require('lib/twitter');
-var replay  = require('lib/replay');
+var twitter = require('./lib/twitter');
+var replay  = require('./lib/replay');
 
 var settings = JSON.parse(fs.readFileSync('secrets.json'));
 

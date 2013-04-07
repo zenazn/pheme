@@ -105,20 +105,15 @@ Graph.prototype.cluster = function(maxLength) {
   function update_bounds(map) {
     var bounds = map.getBounds();
     var ne = bounds.getNorthEast(), sw = bounds.getSouthWest();
-    var round = function (f, n) {
-       return f(n * 1) / 1;
-    }, fl = round.bind(null, Math.floor), ce = round.bind(null, Math.ceil);
-    bounds = [fl(sw.lat()), fl(sw.lng()), ce(ne.lat()), ce(ne.lng())];
-    console.log(bounds);
+    bounds = [sw.lng(), sw.lat(), ne.lng(), ne.lat()];
     if (localStorage.credentials) {
-      //twitter.emit('stream', {locations: bounds.join(',')});
-      twitter.emit('stream', {locations: '-122.75,36.8,-121.75,37.8'});
+      twitter.emit('stream', {locations: bounds.join(',')});
     }
   }
 
   $(function() {
     map = new google.maps.Map(document.getElementById('map'), {
-      center: new google.maps.LatLng(42.37839,-71.11291),
+      center: new google.maps.LatLng(42.37839, -71.11291),
       zoom: 12,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     });
@@ -128,13 +123,12 @@ Graph.prototype.cluster = function(maxLength) {
       t = setTimeout(update_bounds.bind(null, map), 500);
     });
     twitter.on('data', function(d) {
-      if (!d.geo) return;
-      var c = d.geo.coordinates;
+      var c = d.coordinates.coordinates;
       var marker = new google.maps.Marker({
         map: map,
         draggable: false,
         animation: google.maps.Animation.DROP,
-        position: new google.maps.LatLng(c[0], c[1])
+        position: new google.maps.LatLng(c[1], c[0])
       });
       
       var tweet = new Tweet(d, marker);

@@ -4,9 +4,9 @@ function Tweet(data, marker) {
     this.lon = data.geo.coordinates[1];
     this.marker = marker;
     this.tweet = data;
-} 
+}
 
-// Geographical Distance Metric 
+// Geographical Distance Metric
 // Returns euclidean distance between two tweets
 function geoMetric(t1, t2) {
     return Math.sqrt(Math.pow(t1.lat - t2.lat, 2) + Math.pow(t1.lon - t2.lon, 2));
@@ -127,8 +127,9 @@ Graph.prototype.cluster = function(maxLength) {
       t = setTimeout(update_bounds.bind(null, map), 500);
     });
     twitter.on('data', function(d) {
+      if (!d.geo) return;
       var c = d.geo.coordinates;
-      marker = new google.maps.Marker({
+      var marker = new google.maps.Marker({
         map: map,
         draggable: false,
         animation: google.maps.Animation.DROP,

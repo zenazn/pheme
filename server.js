@@ -19,5 +19,5 @@ var server  = require('http').createServer(app);
 var io      = require('socket.io').listen(server);
 server.listen(3000);
 [twitter, replay].forEach(function(service) {
-  service(app, io);
+  service(app, io, settings);
 });

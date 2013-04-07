@@ -2,16 +2,40 @@
 <html>
   <head>
     <title>Testing</title>
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-      var socket = io.connect('http://localhost:3000');
-      var replay = socket.of('/replay');
-      replay.emit('load', '1.json');
-      replay.on('data', function (data) {
-        console.log(data);
-      });
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" />
   </head>
   <body>
+    <div id="auth" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-header">
+        <h3>Please Authenticate With Twitter</h3>
+      </div>
+      <div class="modal-body">
+        <p>
+          Pheme uses Twitter's Streaming API to visualize events as they occur.
+          However, Twitter agressively limits use of its API for
+          non-authenticated users. In order to prevent us from going over our
+          anonymous API request limit, we kindly ask that you authorize Pheme to
+          make API requests on your behalf.
+        </p>
+        <p>
+          We will only access Twitter's public feed (and not any of your private
+          data), and will only use these access credentials while you remain on
+          this site.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button id="auth-no" class="btn" data-dismiss="modal" aria-hidden="true">No Thanks</button>
+        <button id="auth-yes" class="btn btn-primary">Authenticate</button>
+      </div>
+    </div>
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/app.js"></script>
   </body>
 </html>

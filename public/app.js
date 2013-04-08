@@ -142,12 +142,18 @@ Graph.prototype.cluster = function(maxLength) {
       t = setTimeout(update_bounds.bind(null, map), 500);
     });
     twitter.on('data', function(d) {
+      if (!d.coordinates) return;
       var c = d.coordinates.coordinates;
+      // Overplot protection
+      var skew = function() {
+        return (Math.random() - 0.5) / 2000;
+      }
       var marker = new google.maps.Marker({
         map: map,
         draggable: false,
         animation: google.maps.Animation.DROP,
-        position: new google.maps.LatLng(c[1], c[0])
+        position: new google.maps.LatLng(c[1] + skew(), c[0] + skew()),
+        title: d.text
       });
       
       var tweet = new Tweet(d, marker);

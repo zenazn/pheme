@@ -1,7 +1,7 @@
 !function() {
   "use strict";
 
-  var clustering = new Clustering(1000, 2);
+  var clustering = new Clustering(150, 3);
   var socket = io.connect('http://localhost:3000');
   var twitter = socket.of('/twitter');
   var replay = socket.of('/replay');
@@ -84,7 +84,8 @@
           fillColor: "blue",
           path: google.maps.SymbolPath.CIRCLE,
           fillOpacity: 1,
-          strokeWeight: 0,
+          strokeWeight: 1,
+          strokeColor: "black",
           scale: 4
         }
       });
@@ -107,12 +108,12 @@
             fillColor: color,
             path: google.maps.SymbolPath.CIRCLE,
             fillOpacity: 1,
-            strokeWeight: 0,
-            scale: 4 
+            strokeWeight: 1,
+            strokeColor: 'black',
+            scale: 4
           });
         });
       });
-        
       console.log(nclusters);
 
       /*

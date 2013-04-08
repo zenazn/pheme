@@ -74,6 +74,7 @@
       var p = point.find();
       if (clusters[p.id] === undefined) {
         clusters[p.id] = {
+          id: p.id,
           points: [point],
           color: colors[p.id % colors.length]
         };
@@ -84,7 +85,7 @@
 
     // Clusters is a sparse array. Let's filter it down.
     return clusters.filter(function(c) {
-      return c.points.length > threshold;
+      return c.points.length >= threshold;
     });
   };
 })(window);

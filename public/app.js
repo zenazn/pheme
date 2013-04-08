@@ -113,12 +113,20 @@ Graph.prototype.cluster = function(maxLength) {
     }
   });
 
+  var previous_bounds = '';
   function update_bounds(map) {
     var bounds = map.getBounds();
     var ne = bounds.getNorthEast(), sw = bounds.getSouthWest();
-    bounds = [sw.lng(), sw.lat(), ne.lng(), ne.lat()];
-    if (localStorage.credentials) {
-      twitter.emit('stream', {locations: bounds.join(',')});
+    var floor = function(n) { return Math.floor(n * 4) / 4; };
+    var ceil = function(n) { return Math.ceil(n * 4) / 4; };
+    bounds = [
+      floor(sw.lng()), floor(sw.lat()),
+      ceil(ne.lng()), ceil(ne.lat())
+    ].join(',');
+    if (localStorage.credentials && bounds != previous_bounds) {
+      console.log("Panning to", bounds);
+      twitter.emit('stream', {locations: bounds});
+      previous_bounds = bounds;
     }
   }
 

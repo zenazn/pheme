@@ -1,0 +1,17 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Description of Data}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Source}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Scraping Method}{section.2}% 4
+\BOOKMARK [3][-]{subsubsection.2.2.1}{Game Usage Over Time}{subsection.2.2}% 5
+\BOOKMARK [3][-]{subsubsection.2.2.2}{Game Attributes}{subsection.2.2}% 6
+\BOOKMARK [2][-]{subsection.2.3}{Cleaning Method}{section.2}% 7
+\BOOKMARK [1][-]{section.3}{Related Work}{}% 8
+\BOOKMARK [1][-]{section.4}{Design Evolution}{}% 9
+\BOOKMARK [2][-]{subsection.4.1}{Game Attribute Impact on Usage Statistics}{section.4}% 10
+\BOOKMARK [2][-]{subsection.4.2}{Release Date vs. Singleplayer or Multiplayer}{section.4}% 11
+\BOOKMARK [1][-]{section.5}{Visualizations and Analysis}{}% 12
+\BOOKMARK [2][-]{subsection.5.1}{Game Usage by Day of the Week}{section.5}% 13
+\BOOKMARK [2][-]{subsection.5.2}{Impact of Genre on Hourly Game Usage}{section.5}% 14
+\BOOKMARK [2][-]{subsection.5.3}{Impact of Singleplayer or Multiplayer on Hourly Game Usage}{section.5}% 15
+\BOOKMARK [2][-]{subsection.5.4}{Game Release Date vs. Single or Multiplayer}{section.5}% 16
+\BOOKMARK [1][-]{section.6}{Conclusion}{}% 17

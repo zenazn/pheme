@@ -1,7 +1,7 @@
 !function() {
   "use strict";
 
-  var clustering = new Clustering(100, 2);
+  var clustering = new Clustering(1000, 2);
   var socket = io.connect('http://localhost:3000');
   var twitter = socket.of('/twitter');
   var replay = socket.of('/replay');
@@ -73,12 +73,20 @@
       var skew = function() {
         return (Math.random() - 0.5) / 2000;
       }
+
       var marker = new google.maps.Marker({
         map: map,
         draggable: false,
         animation: google.maps.Animation.DROP,
         position: new google.maps.LatLng(c[1] + skew(), c[0] + skew()),
-        title: d.text
+        title: d.text,
+        icon: {
+          fillColor: "blue",
+          path: google.maps.SymbolPath.CIRCLE,
+          fillOpacity: 1,
+          strokeWeight: 0,
+          scale: 4
+        }
       });
 
       var p = new Point(new google.maps.LatLng(c[1], c[0]), {
@@ -86,10 +94,26 @@
         name: d.user.name,
         handle: d.user.screen_name,
         text: d.text,
-        place: d.place
+        place: d.place,
+        marker: marker
       });
+
       clustering.add(p);
-      console.log(clustering.clusters());
+      var nclusters = clustering.clusters();
+      nclusters.forEach(function(element, index, array) {
+        var color = element.color;
+        element.points.forEach(function(element, index, array) {
+          element.data.marker.setIcon({
+            fillColor: color,
+            path: google.maps.SymbolPath.CIRCLE,
+            fillOpacity: 1,
+            strokeWeight: 0,
+            scale: 4 
+          });
+        });
+      });
+        
+      console.log(nclusters);
 
       /*
       var el = $('<div class="tweet"></div>');

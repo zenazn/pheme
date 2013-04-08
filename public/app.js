@@ -1,82 +1,7 @@
-// Tweet Object
-function Tweet(data, marker) {
-  this.lat = data.coordinates.coordinates[1];
-  this.lon = data.coordinates.coordinates[0];
-  this.marker = marker;
-  this.tweet = data;
-}
-
-// Geographical Distance Metric
-// Returns geographical distance between two tweets
-function geoMetric(t1, t2) {
-  p1 = new google.maps.LatLng(t1.lat, t1.lon);
-  p2 = new google.maps.LatLng(t2.lat, t2.lon);
-  return google.maps.geometry.spherical.computeDistanceBetween(p1, p2);
-}
-
-// Graph Object
-function Graph(metric) {
-  this.distance = metric;
-  this.vertices = [];
-  this.edges = [];
-}
-
-// Update graph with new vertex, keeping edges sorted in descending order
-// by length
-Graph.prototype.update = function (vertex) {
-  var that = this;
-  this.vertices.forEach(function(element, index, array) {
-    that.edges.push([that.distance(vertex, element), index, array.length]);
-    that.edges.sort(function(a,b) {return b[0]-a[0]});
-  });
-  this.vertices.push(vertex);
-};
-
-// Identify clusters in graph, with edges of length no
-// greater than maxLength
-Graph.prototype.cluster = function(maxLength) {
-  var edges = this.edges.slice(0);
-  var clusters = [];
-  this.vertices.forEach(function(element, index, array) {
-    clusters.push([index]);
-  });
-
-  var num = 0;
-  var curEdge;
-  while((curEdge = edges.pop()) && curEdge[0] < maxLength) {
-    var el1 = curEdge[1];
-    var el2 = curEdge[2];
-    var cluster1;
-    var cluster2;
-    clusters.forEach(function(element, index, array) {
-      if(element.indexOf(el1) != -1) {
-        cluster1 = index;
-      }
-      if(element.indexOf(el2) != -1) {
-        cluster2 = index;
-      }
-    });
-    if(cluster1 != cluster2) {
-      var newCluster = clusters[cluster1].concat(clusters[cluster2]);
-      if(cluster1 < cluster2) {
-        clusters.splice(cluster2, 1);
-        clusters.splice(cluster1, 1);
-      }
-      else {
-        clusters.splice(cluster1, 1);
-        clusters.splice(cluster2, 1);
-      }
-      clusters.push(newCluster);
-    }
-    num++;
-  }
-  return clusters;
-};
-
 !function() {
   "use strict";
 
-  var graph = new Graph(geoMetric);
+  var clustering = new Clustering(100, 2);
   var socket = io.connect('http://localhost:3000');
   var twitter = socket.of('/twitter');
   var replay = socket.of('/replay');
@@ -155,10 +80,22 @@ Graph.prototype.cluster = function(maxLength) {
         position: new google.maps.LatLng(c[1] + skew(), c[0] + skew()),
         title: d.text
       });
-      
-      var tweet = new Tweet(d, marker);
-      graph.update(tweet);
-      console.log(graph.cluster(5000));
+
+      var p = new Point(new google.maps.LatLng(c[1], c[0]), {
+        id: d.id_str,
+        name: d.user.name,
+        handle: d.user.screen_name,
+        text: d.text,
+        place: d.place
+      });
+      clustering.add(p);
+      console.log(clustering.clusters());
+
+      /*
+      var el = $('<div class="tweet"></div>');
+      el.text(d.text);
+      $('#sidebar').prepend(el);
+      */
     });
   });
 }();

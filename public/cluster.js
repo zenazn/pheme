@@ -28,6 +28,7 @@
     var path = [], p = this;
     while (p.parent != p) {
       path.push(p);
+      p = p.parent;
     }
     path.forEach(function(el) {
       el.parent = p;

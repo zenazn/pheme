@@ -6,7 +6,9 @@
   var twitter = socket.of('/twitter');
   var replay = socket.of('/replay');
 
-  var token, map;
+  var tweet_template = Handlebars.compile($('#tweet-template').html());
+
+  var token, map, clusters;
 
   if (!localStorage.credentials) {
     twitter.emit('request_token');
@@ -66,6 +68,7 @@
       if (t) clearTimeout(t);
       t = setTimeout(update_bounds.bind(null, map), 500);
     });
+
     twitter.on('data', function(d) {
       if (!d.coordinates) return;
       var c = d.coordinates.coordinates;
@@ -100,12 +103,12 @@
       });
 
       clustering.add(p);
-      var nclusters = clustering.clusters();
-      nclusters.forEach(function(element, index, array) {
-        var color = element.color;
-        element.points.forEach(function(element, index, array) {
-          element.data.marker.setIcon({
-            fillColor: color,
+      clusters = clustering.clusters();
+      var seen_ids = {};
+      clusters.forEach(function(cluster) {
+        cluster.points.forEach(function(point) {
+          point.data.marker.setIcon({
+            fillColor: cluster.color,
             path: google.maps.SymbolPath.CIRCLE,
             fillOpacity: 1,
             strokeWeight: 1,
@@ -113,14 +116,27 @@
             scale: 4
           });
         });
-      });
-      console.log(nclusters);
 
-      /*
-      var el = $('<div class="tweet"></div>');
-      el.text(d.text);
-      $('#sidebar').prepend(el);
-      */
+        var el = $('#sidebar #' + cluster.id + '.cluster');
+        if (el.length == 0) {
+          el = $(document.createElement('div'));
+          el.addClass('cluster');
+          el.attr('id', '' + cluster.id);
+          el.css('backgroundColor', cluster.color);
+          $('#sidebar').append(el);
+        }
+        el.empty();
+        cluster.points.forEach(function(point) {
+          el.append(tweet_template(point.data));
+        });
+        seen_ids['' + cluster.id] = true;
+      });
+      $('#sidebar .cluster').each(function(i, el) {
+        if (!(el.attr('id') in seen_ids)) {
+          el.remove();
+        }
+      });
+      console.log(clusters);
     });
   });
 }();

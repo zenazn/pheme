@@ -21,3 +21,36 @@ html, body, #map {
   right: 0;
   width: 300px;
 }
+
+#sidebar h2 {
+  margin: 0 10px;
+}
+
+#sidebar .cluster {
+  position: relative;
+  width: 5px;
+}
+
+#sidebar .tweet {
+  width: 275px;
+  padding-left: 15px;
+  padding-right: 10px;
+}
+
+#sidebar .tweet h4.handle {
+  margin: 0;
+  display: inline;
+  font-size: 12px;
+  font-weight: bold;
+}
+#sidebar .tweet h5.name {
+  margin: 0;
+  display: inline;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+#sidebar .tweet p {
+  font-size: 10px;
+  margin: 0;
+}

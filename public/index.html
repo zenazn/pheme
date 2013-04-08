@@ -32,10 +32,22 @@
       </div>
     </div>
     <div id="map"></div>
-    <div id="sidebar"></div>
+    <div id="sidebar">
+      <h2>Clusters</h2>
+    </div>
+
+    <!-- Handlebars template -->
+    <script id="tweet-template" type="text/x-handlebars-template">
+      <div class="tweet">
+      <h4 class="handle">@{{handle}}</h4>
+      <h5 class="name">{{name}}</h5>
+      <p class="tweet-body">{{text}}</p>
+      </div>
+    </script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.min.js"></script>
     <script src="//maps.googleapis.com/maps/api/js?sensor=false&libraries=geometry"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/cluster.js"></script>

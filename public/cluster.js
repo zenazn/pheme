@@ -83,6 +83,13 @@
       }
     });
 
+    clusters.forEach(function(cluster) {
+      cluster.bounds = new google.maps.LatLngBounds();
+      cluster.points.forEach(function(point) {
+        cluster.bounds.extend(point.pos);
+      });
+    });
+
     // Clusters is a sparse array. Let's filter it down.
     return clusters.filter(function(c) {
       return c.points.length >= threshold;

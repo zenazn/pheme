@@ -1,15 +1,17 @@
 // Tweet Object
 function Tweet(data, marker) {
-  this.lat = data.geo.coordinates[1];
-  this.lon = data.geo.coordinates[0];
+  this.lat = data.coordinates.coordinates[1];
+  this.lon = data.coordinates.coordinates[0];
   this.marker = marker;
   this.tweet = data;
 }
 
 // Geographical Distance Metric
-// Returns euclidean distance between two tweets
+// Returns geographical distance between two tweets
 function geoMetric(t1, t2) {
-  return Math.sqrt(Math.pow(t1.lat - t2.lat, 2) + Math.pow(t1.lon - t2.lon, 2));
+  p1 = new google.maps.LatLng(t1.lat, t1.lon);
+  p2 = new google.maps.LatLng(t2.lat, t2.lon);
+  return google.maps.geometry.spherical.computeDistanceBetween(p1, p2);
 }
 
 // Graph Object
@@ -19,12 +21,13 @@ function Graph(metric) {
   this.edges = [];
 }
 
-// Update graph with new vertex, keepin edges sorted in descending order
+// Update graph with new vertex, keeping edges sorted in descending order
 // by length
 Graph.prototype.update = function (vertex) {
+  var that = this;
   this.vertices.forEach(function(element, index, array) {
-    this.edges.push([this.distance(vertex, element), index, (array.length + 1)]);
-    this.edges.sort(function(a,b) {return b[0]-a[0]});
+    that.edges.push([that.distance(vertex, element), index, array.length]);
+    that.edges.sort(function(a,b) {return b[0]-a[0]});
   });
   this.vertices.push(vertex);
 };
@@ -38,27 +41,35 @@ Graph.prototype.cluster = function(maxLength) {
     clusters.push([index]);
   });
 
-  curEdge = edges.pop();
-  while(curEdge < maxLength) {
-    var el1 = this.vertices[curEdge[1]];
-    var el2 = this.vertices[curEdge[2]];
+  var num = 0;
+  var curEdge;
+  while((curEdge = edges.pop()) && curEdge[0] < maxLength) {
+    var el1 = curEdge[1];
+    var el2 = curEdge[2];
     var cluster1;
     var cluster2;
     clusters.forEach(function(element, index, array) {
       if(element.indexOf(el1) != -1) {
         cluster1 = index;
       }
-      else if(element.indexOf(el2) != -1) {
+      if(element.indexOf(el2) != -1) {
         cluster2 = index;
       }
     });
-    var newCluster = clusters[cluster1].concat(clusters[cluster2]);
-    clusters.splice(cluster1, 1);
-    clusters.splice(cluster2, 1);
-    clusters.push(newCluster);
-    curEdge = edges.pop();
+    if(cluster1 != cluster2) {
+      var newCluster = clusters[cluster1].concat(clusters[cluster2]);
+      if(cluster1 < cluster2) {
+        clusters.splice(cluster2, 1);
+        clusters.splice(cluster1, 1);
+      }
+      else {
+        clusters.splice(cluster1, 1);
+        clusters.splice(cluster2, 1);
+      }
+      clusters.push(newCluster);
+    }
+    num++;
   }
-
   return clusters;
 };
 
@@ -133,7 +144,7 @@ Graph.prototype.cluster = function(maxLength) {
       
       var tweet = new Tweet(d, marker);
       graph.update(tweet);
-      console.log(graph.cluster);
+      console.log(graph.cluster(5000));
     });
   });
 }();

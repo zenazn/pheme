@@ -36,14 +36,14 @@
   };
   // Also, union-by-rank! Ahmeezing!
   Point.prototype.union = function(other) {
-    var p = this.find();
-    if (p.rank < other.rank) {
-      p.parent = other;
-    } else if (p.rank > other.rank) {
+    var p = this.find(), o = other.find();
+    if (p.rank < o.rank) {
+      p.parent = o;
+    } else if (p.rank > o.rank) {
       other.parent = p;
     } else {
-      p.parent = other;
-      other.rank++;
+      p.parent = o;
+      o.rank++;
     }
   };
 

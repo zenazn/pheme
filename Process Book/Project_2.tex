@@ -79,14 +79,23 @@ We faced two challenges when deciding how to construct and visualize our cluster
 
 \subsubsection{Clustering Algorithm}
 Our first task was to decide how to actually identify clusters of tweets; we knew that clusters would be based on geographical distance, but needed to decide on a specific clustering algorithm. Most traditional clustering algorithms, like k-means clustering, hierarchical clustering, and autoclass clustering, do not fit our visualization goal. Not only do they depend on the assumption that all the points to be clustered are available immediately - which is not true in our case, because tweets arrive in realtime in our visualization - they also try to fit every point to a cluster - which is not what we desire, because we only want to cluster points that we believe are close enough to actually be an event. Accordingly, we designed the following simple algorithm for clustering:
-% TODO: Carl please describe algorithm here, and maybe discuss benefits and constants (threshold, maxDistance etc.)
+%% TODO: Carl please describe algorithm here, and maybe discuss benefits and constants (threshold, maxDistance etc.)
 \begin{enumerate}
 \item
 \end{enumerate}
 
 \subsubsection{Visualizing Clusters}
-Once we decided upon the algorithm by which we would identify clusters, we had to decide how to visualize them. Initially, we considered leaving tweets as the original google maps marker, and connecting tweets in a cluster with lines indicating which . Next, we had to decide
+Once we decided upon the algorithm by which we would identify clusters, we had to decide how to visualize them. 
 
+Initially, we considered leaving tweets as the original google maps marker, and connecting tweets in a cluster with lines. On the one hand, this would allow viewers to see how the cluster grew with time, as lines would extend out from old tweets in the cluster to new tweets in the cluster. However, there were a significant drawbacks to this method. On a relatively zoomed out map, it would be difficult to actually identify clusters by eye on the map because all the tweet markers would look the same, and the lines connecting tweets would be extremely small; this visual query is particularly important to our viewers.
+
+To address this problem, we decided to encode cluster membership using color; tweets would normally appear as blue dots on the map, and change colors once they were associated with a particular cluster, so that each cluster has a different color. We selected a color scheme using Color Brewer, as recommended in lecture;\footnote{http://colorbrewer2.org/} we set Color Brewer to $12$ data classes, the maximum, and specified that the nature of our data was qualitative. Every cluster would be randomly assigned a unique color from our color scheme as it was generated, and tweets in that cluster would be colored accordingly. At this stage, our visualization looked like the following: \\ \\
+\includegraphics[width=5.5in]{fail1.png} \\ \\
+At this zoom it's relatively easy to identify the cluster (in purple); we made sure that multiple tweets from exactly the same location would not show up on top of each other by providing some very small random noise in the location of the tweet. Unfortunately at lower zooms, all of the tweets in the cluster are on top of each other, so it is one purple dot in a sea of blue dots.
+\includegraphics[width=5.5in]{fail2.png} \\ \\
+Obviously, while better than the previous idea, viewers would still certainly have trouble identifying this cluster by eye at higher zooms. Furthermore, even at the higher zoom, users faced another issue. First, they can't easily visually identify the center and size of the cluster. Second, viewers cannot distinguish between brushing or selecting an individual tweet, and brushing or selecting a cluster.
+
+Accordingly, we iterated on our visualization once more. 
 \section{Visualizations} 
 
 \section{Conclusion}

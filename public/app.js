@@ -185,11 +185,10 @@
       });
 
       $('#sidebar .cluster').each(function(i, el) {
-        if (!(el.attr('id') in seen_ids)) {
+        if (!(el.id in seen_ids)) {
           el.remove();
         }
       });
-      console.log(clusters);
     });
   });
 }();

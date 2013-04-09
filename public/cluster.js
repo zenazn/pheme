@@ -91,8 +91,32 @@
     });
 
     // Clusters is a sparse array. Let's filter it down.
-    return clusters.filter(function(c) {
+    clusters = clusters.filter(function(c) {
       return c.points.length >= threshold;
     });
+
+    // Find center and radius of each cluster
+    clusters.forEach(function(cluster) {
+      var centerlat = 0;
+      var centerlng = 0;
+      cluster.points.forEach(function(point) {
+        centerlat = centerlat + point.pos.lat();
+        centerlng = centerlng + point.pos.lng();
+      });
+      centerlat = centerlat/cluster.points.length;
+      centerlng = centerlng/cluster.points.length;
+      cluster.center = new google.maps.LatLng(centerlat, centerlng);
+
+      var maxDist = 0;
+      cluster.points.forEach(function(point) {
+        if(maxDist < metric(point.pos, cluster.center)) {
+          maxDist = metric(point.pos, cluster.center);
+        }
+      });
+      cluster.radius = maxDist * 1.5;
+    });
+
+    return clusters;
+
   };
 })(window);

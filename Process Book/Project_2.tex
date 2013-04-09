@@ -22,14 +22,29 @@
 \pagebreak
 
 \section{Introduction}
-In this project, my primary research goal is to understand the relationship between various attributes of a computer game, and it's concurrent user statistics (number of concurrent games on any particular hour of the day, or day of the week). In particular, I focus on the following features: genre and single vs. multiplayer. In addition, I examine the relationship between game release date and whether the game is singleplayer or multiplayer.
+\subsection{Motivation}
+Most current visualizations of social data require viewers to already have a subject matter in mind; they allow viewers to search for and investigate specific keywords, hashtags, or locales. However, we think that social data is interesting primarily because it allows us to discover new topics for investigation - topics that are being generated in real time by the humans who are producing the social data. Accordingly, we want to build a visualization that guides a curious but unfocused viewer in identifying undiscovered topics/events that are currently occurring in the real world.
+\subsection{Goals}
+In this project, our goal is to investigate high-throughput social data streams, and answer two primary research questions:
+\begin{enumerate}
+\item Can we identify "events" from real-time social data?
+\item If we can, what can we learn about such "events" from various social data sources?
+\end{enumerate}
+To achieve these goals, we have built a visualization that tries to identify current events that are occurring within a user-specified geography (location + radius), using real time social data. Concretely, we pull a live stream of Twitter data being generated in the specified geography, and try to identify clusters of tweets; currently, we cluster primarily by geographical proximity, but hope to cluster using other techniques in project 3.
+
 \section{Description of Data}
 \subsection{Source}
-The ultimate source of the data for my visualizations is Steam, a game distribution and multiplayer platform that hosts a variety of games; given that I was interested in analyzing computer game usage statistics over time, Steam was an obvious choice of data source. I retrieved two types of data from the Steam website:
-\begin{enumerate} 
-\item Game Attributes: Steam has individual game profile pages, which were a convenient source for static information about computer games (like genre, publisher, price, etc.). 
-\item Game Usage Over Time: Since Steam requires users to log on before playing games, Steam also has detailed statistics about the current number of people playing a particular game at a particular time. Unfortunately, Steam only publishes hourly data on current number of players for the top 100 games (by current player count), but that was sufficient for my needs.
+The ultimate source of the data for our visualizations is Twitter, an online social network and microblogging service that allows users to instantaneously send and receive short messages, called tweets, on various electronic devices. Twitter is one of the most popular, if not the most popular, sites that produces real-time social data; as of 2012, it produced more than 340 million tweets per day \footnote{http://techcrunch.com/2012/07/30/analyst-twitter-passed-500m-users-in-june-2012-140m-of-them-in-us-jakarta-biggest-tweeting-city/}. Given our interest high-throughput social data streams, Twitter was a natural data source to focus on.
+
+Using Twitter's API, we pulled tweets, which contained several relevant pieces of information:
+\begin{enumerate}
+\item Geographical location: Twitter users can choose to specify a geographical location to associate with their tweet. This is particularly interesting for users who tweet on their mobile phones, and choose to expose their phone's GPS data to the service.
+\item Twitter Screenname: Tweets are associated with the screen name of the user publishing the tweets.
+\item Tweet contents: The actual text content of the tweet. This is also available to viewers of our visualization.
+\item Hashtags: Twitter users can specify hashtags, or metadata, to associate with their tweet. 
+\item Tweet timestamp: The time at which the tweet was published.
 \end{enumerate}
+
 \subsection{Scraping Method}
 As described above, I retrieved two types of data from Steam, and I wrote a separate script for each type of data. In both scripts, I used python with the pattern library.
 \subsubsection{Game Usage Over Time}
@@ -92,7 +107,6 @@ The reason why I chose to do this, despite the disadvantages of stacked bar char
 \section{Visualizations and Analysis}
 \subsection{Game Usage by Day of the Week}
 First, I examined the impact of the day of the week on hourly game usage (as measured by total number of current players): \\ \\
-
 From this graph, it appears that the hourly game usage is fairly consistent across day of the week, at least for weekdays (unfortunately, I wasn't able to collect any weekend data). In addition, if you filter by a specific genre (which you can do on the Genre Overview dashboard), you get the same result. Because of this, I felt comfortable in ignoring day of the week altogether, and just averaging hourly data across all the dates in my data. All later charts in my visualizations that contain hourly current user numbers are averaging the current user numbers for that hour across multiple days. \\ \\
 One other interesting thing to note is that the data from Wednesday at 1pm EST seems to be missing; I assume my Amazon virtual server instance experienced some downtime around them.
 

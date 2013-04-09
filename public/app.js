@@ -4,7 +4,7 @@
   var clustering = new Clustering(1500, 2);
   var socket = io.connect('http://localhost:3000');
   var twitter = socket.of('/twitter');
-  var replay = socket.of('/replay');
+  //var replay = socket.of('/replay');
 
   var tweet_template = Handlebars.compile($('#tweet-template').html());
 

@@ -75,14 +75,19 @@ If the map we chose to visualize tweets on did not contain detailed city, street
 Accordingly, we decided to build our visualization using the Google Maps API. In addition to a very detailed map, which would help viewers make a variety of useful visual queries relating to the events we identify, the Google Maps API contains several nice features, including zooming - which will allow users to drill down/filter as we explain later - and simple methods to draw basic objects on the map. 
 
 \subsection{Clustering}
-We faced several challenges when deciding how to construct and visualize our clusters.
+We faced two challenges when deciding how to construct and visualize our clusters.
 
+\subsubsection{Clustering Algorithm}
+Our first task was to decide how to actually identify clusters of tweets; we knew that clusters would be based on geographical distance, but needed to decide on a specific clustering algorithm. Most traditional clustering algorithms, like k-means clustering, hierarchical clustering, and autoclass clustering, do not fit our visualization goal. Not only do they depend on the assumption that all the points to be clustered are available immediately - which is not true in our case, because tweets arrive in realtime in our visualization - they also try to fit every point to a cluster - which is not what we desire, because we only want to cluster points that we believe are close enough to actually be an event. Accordingly, we designed the following simple algorithm for clustering:
+% TODO: Carl please describe algorithm here, and maybe discuss benefits and constants (threshold, maxDistance etc.)
+\begin{enumerate}
+\item
+\end{enumerate}
 
+\subsubsection{Visualizing Clusters}
+Once we decided upon the algorithm by which we would identify clusters, we had to decide how to visualize them. Initially, we had decided 
 
 \section{Visualizations} 
-
-
-\subsection{Clustering}
 
 \subsection{Colors} 
 \section{Conclusion}

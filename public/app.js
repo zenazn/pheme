@@ -153,6 +153,7 @@
             .addClass('cluster')
             .data('cluster', cluster.id)
             .css('backgroundColor', cluster.color)
+            // Sometimes this glitches out and keeps a marker really big. IDK.
             .hover(/* mouseenter */ function() {
               var icon = markers.center.getIcon();
               icon.scale = 10;

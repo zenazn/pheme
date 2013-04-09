@@ -30,7 +30,7 @@ In this project, our goal is to investigate high-throughput social data streams,
 \item Can we identify "events" from real-time social data?
 \item If we can, what can we learn about such "events" from various social data sources?
 \end{enumerate}
-To achieve these goals, we have built a visualization that tries to identify current events that are occurring within a user-specified geography (location + radius), using real time social data. Concretely, we pull a live stream of Twitter data being generated in the specified geography, and try to identify clusters of tweets; currently, we cluster primarily by geographical proximity, but hope to cluster using other techniques in project 3.
+To achieve these goals, we have built a visualization that tries to identify current events that are occurring within a user-specified geography (location + radius), using real time social data. Concretely, we pull a live stream of Twitter data being generated in the specified geography, and try to identify clusters of tweets; currently, we cluster primarily by geographical proximity, but hope to cluster using other techniques in project 3. Currently, we aren't doing significant processing on the events that we identify, but we hope to expand on that in project 3.
 
 \section{Description of Data}
 \subsection{Source}
@@ -93,11 +93,28 @@ To address this problem, we decided to encode cluster membership using color; tw
 \includegraphics[width=5.5in]{fail1.png} \\ \\
 At this zoom it's relatively easy to identify the cluster (in purple); we made sure that multiple tweets from exactly the same location would not show up on top of each other by providing some very small random noise in the location of the tweet. Unfortunately at lower zooms, all of the tweets in the cluster are on top of each other, so it is one purple dot in a sea of blue dots.
 \includegraphics[width=5.5in]{fail2.png} \\ \\
-Obviously, while better than the previous idea, viewers would still certainly have trouble identifying this cluster by eye at higher zooms. Furthermore, even at the higher zoom, users faced another issue. First, they can't easily visually identify the center and size of the cluster. Second, viewers cannot distinguish between brushing or selecting an individual tweet, and brushing or selecting a cluster.
+Obviously, while better than the previous idea, viewers would still certainly have trouble identifying this cluster by eye at higher zooms. Furthermore, even at the higher zoom, users faced another two issues. First, they can't easily visually identify the center and size of the cluster. Second, viewers cannot distinguish between brushing or selecting an individual tweet, and brushing or selecting a cluster.
 
-Accordingly, we iterated on our visualization once more. 
-\section{Visualizations} 
+Accordingly, we iterated on our visualization once more. To help viewers actually visualize the cluster itself, rather than only the constituent tweets, we decided to compute the center of every cluster (the average of the longitude and latitude of every tweet in the cluster) and the radius of every cluster (the distance between the center of the cluster and the tweet in the cluster that is furtherest away from the center). Then, we drew a translucent circle in the current cluster's color with center and radius as calculated above, so that viewers of our visualization could actually see the clusters the visualization had identified. \\ \\
+\includegraphics[width=5.5in]{success1.png} \\ \\
+To help viewers distinguish between brushing or selecting an individual tweet, and brushing or selecting a cluster, we placed a marker of the appropriate color at the center of every cluster. In this way, viewers can hover over the cluster in the sidebar to enlarge the cluster marker on the map (shown below). \\ \\
+Hovering over a cluster: \\
+\includegraphics[width=5.5in]{hover1.png} \\ \\
+Not hovering over a cluster: \\ 
+\includegraphics[width=5.5in]{hover2.png} \\ \\
+Not only does this allow viewers to brush clusters effectively, it also further assists with the visual query of actually associating a cluster of tweets listed on the sidebar with a location on the map.
 
+\section{Visualizations and Data Analysis} 
+\subsection{Visualization}
+Our visualization allows the user to select a geography of interest, and to draw tweets on the map in real time. By default, our visualization is currently focused on Boston; however, users can zoom and drag the map as desired to grab tweets from any particular region in the world. As data arrives, we also dynamically detect clusters of interesting points in the current viewport/geography, and visually group them by enclosing them in a circle and coloring them similarly. In addition, we display a list of all the identified clusters, and the component tweets in each cluster, in a secondary view - a sidebar to the the right of the map. Our visualization also supports several user interactions, as described below:
+\begin{enumerate}
+\item Linking \& Brushing. Our visualization has two views, the map - which displays the geographical location of tweets and clusters - and the cluster sidebar - which contains a list of all clusters currently identified and the member tweets of each cluster. We support linking \& brushing by interactively highlighting the cluster marker on the map (by making it larger) when ther viewer hovers over the cluster in the cluster sidebar. 
+\item Details-on-Demand. Our visualization supports details-on-demand with a tool tip. Whenever a user hovers over an individual tweet on the map, regardless of whether or not it is in a cluster, a tool tip will appear after a short delay showing the text contained in the tweet. 
+\item Drill-Down/Filter Capability. Our visualization suuports a drill-down or filtering interaction by allowing users to drag the map viewport and zoom in or out of the viewport as desired. In this way, the user can exactly specify what geographical area they wish to pull tweets and identify clusters in; the visualization responds by drilling-down/filtering tweets to match this specification.
+\end{enumerate}
+
+\subsection{Data Analysis}
+The ultimate goal of our visualization was
 \section{Conclusion}
 
 \end{document}

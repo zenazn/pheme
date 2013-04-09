@@ -94,7 +94,7 @@ We faced two challenges when deciding how to construct and visualize our cluster
 \subsubsection{Clustering Algorithm}
 Our first task was to decide how to actually identify clusters of tweets; we knew that clusters would be based on geographical distance, but needed to decide on a specific clustering algorithm. Most traditional clustering algorithms, like k-means clustering, hierarchical clustering, and autoclass clustering, do not fit our visualization goal. Not only do they depend on the assumption that all the points to be clustered are available immediately - which is not true in our case, because tweets arrive in realtime in our visualization - they also try to fit every point to a cluster - which is not what we desire, because we only want to cluster points that we believe are close enough to actually be an event. Accordingly, we designed the following simple algorithm for clustering:
 
-First, we take the Cartesian distance between every two points in the system.
+First, we take the spherical distance between every two points in the system.
 Any pairs which are below some threshold distance (in our testing, we found that
 a distance of about 150 meters was appropriate), are considered part of the same
 cluster. Once a cluster has more than some minimum number of points (say,

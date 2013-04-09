@@ -4,14 +4,14 @@
 \contentsline {section}{\numberline {2}Description of Data}{2}{section.2}
 \contentsline {subsection}{\numberline {2.1}Source}{2}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}Scraping Method}{3}{subsection.2.2}
-\contentsline {section}{\numberline {3}Related Work}{3}{section.3}
+\contentsline {section}{\numberline {3}Related Work}{4}{section.3}
 \contentsline {section}{\numberline {4}Design Evolution}{4}{section.4}
 \contentsline {subsection}{\numberline {4.1}Maps}{6}{subsection.4.1}
 \contentsline {subsection}{\numberline {4.2}Clustering}{7}{subsection.4.2}
 \contentsline {subsubsection}{\numberline {4.2.1}Clustering Algorithm}{7}{subsubsection.4.2.1}
-\contentsline {subsubsection}{\numberline {4.2.2}Visualizing Clusters}{7}{subsubsection.4.2.2}
-\contentsline {section}{\numberline {5}Visualizations and Discussion}{12}{section.5}
-\contentsline {subsection}{\numberline {5.1}Visualization}{12}{subsection.5.1}
-\contentsline {subsection}{\numberline {5.2}Discussion}{12}{subsection.5.2}
-\contentsline {section}{\numberline {6}Conclusion}{14}{section.6}
-\contentsline {subsection}{\numberline {6.1}Future Work}{15}{subsection.6.1}
+\contentsline {subsubsection}{\numberline {4.2.2}Visualizing Clusters}{8}{subsubsection.4.2.2}
+\contentsline {section}{\numberline {5}Visualizations and Discussion}{13}{section.5}
+\contentsline {subsection}{\numberline {5.1}Visualization}{13}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Discussion}{13}{subsection.5.2}
+\contentsline {section}{\numberline {6}Conclusion}{15}{section.6}
+\contentsline {subsection}{\numberline {6.1}Future Work}{16}{subsection.6.1}

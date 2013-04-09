@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  9 APR 2013 00:26
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  9 APR 2013 00:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -391,230 +391,231 @@ Underfull \hbox (badness 10000) in paragraph at lines 37--37
 00m-users-in-june-2012-
  []
 
-[2] <tweetography.png, id=110, 640.3925pt x 348.30125pt>
+[2] [3] <tweetography.png, id=123, 640.3925pt x 348.30125pt>
 File: tweetography.png Graphic file (type png)
 
 <use tweetography.png>
-Package pdftex.def Info: tweetography.png used on input line 61.
+Package pdftex.def Info: tweetography.png used on input line 75.
 (pdftex.def)             Requested size: 397.48499pt x 216.18901pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 60--63
+Underfull \hbox (badness 10000) in paragraph at lines 74--77
 
  []
 
 
-Overfull \hbox (7.48499pt too wide) in paragraph at lines 60--63
+Overfull \hbox (7.48499pt too wide) in paragraph at lines 74--77
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 60--63
+Underfull \hbox (badness 10000) in paragraph at lines 74--77
 
  []
 
-[3] <proposal1.png, id=130, 325.215pt x 261.6174pt>
+<proposal1.png, id=124, 325.215pt x 261.6174pt>
 File: proposal1.png Graphic file (type png)
  <use proposal1.png>
-Package pdftex.def Info: proposal1.png used on input line 66.
+Package pdftex.def Info: proposal1.png used on input line 80.
 (pdftex.def)             Requested size: 361.34999pt x 290.70612pt.
 
-<proposal2.png, id=132, 332.9238pt x 218.7372pt>
+<proposal2.png, id=126, 332.9238pt x 218.7372pt>
 File: proposal2.png Graphic file (type png)
  <use proposal2.png>
-Package pdftex.def Info: proposal2.png used on input line 68.
+Package pdftex.def Info: proposal2.png used on input line 82.
 (pdftex.def)             Requested size: 361.34999pt x 237.42418pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--70
+Underfull \hbox (badness 10000) in paragraph at lines 79--84
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--70
+Underfull \hbox (badness 10000) in paragraph at lines 79--84
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--70
+Underfull \hbox (badness 10000) in paragraph at lines 79--84
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--70
+Underfull \hbox (badness 10000) in paragraph at lines 79--84
 
  []
 
-[4 <./tweetography.png>] [5 <./proposal1.png> <./proposal2.png>]
-<fenway.png, id=143, 483.8075pt x 351.3125pt>
+[4 <./tweetography.png>] [5 <./proposal1.png>]
+<fenway.png, id=136, 483.8075pt x 351.3125pt>
 File: fenway.png Graphic file (type png)
  <use fenway.png>
-Package pdftex.def Info: fenway.png used on input line 73.
+Package pdftex.def Info: fenway.png used on input line 87.
 (pdftex.def)             Requested size: 397.48499pt x 288.64096pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 72--76
+Underfull \hbox (badness 10000) in paragraph at lines 86--90
 
  []
 
 
-Overfull \hbox (7.48499pt too wide) in paragraph at lines 72--76
+Overfull \hbox (7.48499pt too wide) in paragraph at lines 86--90
 [] 
  []
 
-[6 <./fenway.png>] <fail1.png, id=150, 893.3375pt x 680.5425pt>
+[6 <./proposal2.png>] [7 <./fenway.png>]
+<fail1.png, id=148, 893.3375pt x 680.5425pt>
 File: fail1.png Graphic file (type png)
-
-<use fail1.png>
-Package pdftex.def Info: fail1.png used on input line 93.
+ <use fail1.png>
+Package pdftex.def Info: fail1.png used on input line 117.
 (pdftex.def)             Requested size: 397.48499pt x 302.80411pt.
- <fail2.png, id=151, 1435.3625pt x 801.99625pt>
+
+<fail2.png, id=149, 1435.3625pt x 801.99625pt>
 File: fail2.png Graphic file (type png)
  <use fail2.png>
-Package pdftex.def Info: fail2.png used on input line 95.
+Package pdftex.def Info: fail2.png used on input line 119.
 (pdftex.def)             Requested size: 397.48499pt x 222.08545pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 92--97
+Underfull \hbox (badness 10000) in paragraph at lines 116--121
 
  []
 
 
-Overfull \hbox (7.48499pt too wide) in paragraph at lines 92--97
+Overfull \hbox (7.48499pt too wide) in paragraph at lines 116--121
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 92--97
+Underfull \hbox (badness 10000) in paragraph at lines 116--121
 
  []
 
 
-Overfull \hbox (7.48499pt too wide) in paragraph at lines 92--97
+Overfull \hbox (7.48499pt too wide) in paragraph at lines 116--121
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 92--97
+Underfull \hbox (badness 10000) in paragraph at lines 116--121
 
  []
 
-[7] [8 <./fail1.png>] <success1.png, id=163, 1131.22626pt x 803.0pt>
+[8] [9 <./fail1.png>] <success1.png, id=160, 1131.22626pt x 803.0pt>
 File: success1.png Graphic file (type png)
 
 <use success1.png>
-Package pdftex.def Info: success1.png used on input line 99.
+Package pdftex.def Info: success1.png used on input line 123.
 (pdftex.def)             Requested size: 397.48499pt x 282.14471pt.
- <hover1.png, id=164, 1435.86438pt x 797.98125pt>
+ <hover1.png, id=161, 1435.86438pt x 797.98125pt>
 File: hover1.png Graphic file (type png)
 
 <use hover1.png>
-Package pdftex.def Info: hover1.png used on input line 102.
+Package pdftex.def Info: hover1.png used on input line 126.
 (pdftex.def)             Requested size: 397.48499pt x 220.90057pt.
- <hover2.png, id=165, 1439.3775pt x 798.985pt>
+ <hover2.png, id=162, 1439.3775pt x 798.985pt>
 File: hover2.png Graphic file (type png)
 
 <use hover2.png>
-Package pdftex.def Info: hover2.png used on input line 104.
+Package pdftex.def Info: hover2.png used on input line 128.
 (pdftex.def)             Requested size: 397.48499pt x 220.64201pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 98--106
+Underfull \hbox (badness 10000) in paragraph at lines 122--130
 
  []
 
 
-Overfull \hbox (7.48499pt too wide) in paragraph at lines 98--106
+Overfull \hbox (7.48499pt too wide) in paragraph at lines 122--130
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 98--106
+Underfull \hbox (badness 10000) in paragraph at lines 122--130
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 98--106
+Underfull \hbox (badness 10000) in paragraph at lines 122--130
 
  []
 
 
-Overfull \hbox (7.48499pt too wide) in paragraph at lines 98--106
+Overfull \hbox (7.48499pt too wide) in paragraph at lines 122--130
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 98--106
+Underfull \hbox (badness 10000) in paragraph at lines 122--130
 
  []
 
 
-Overfull \hbox (7.48499pt too wide) in paragraph at lines 98--106
+Overfull \hbox (7.48499pt too wide) in paragraph at lines 122--130
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 98--106
+Underfull \hbox (badness 10000) in paragraph at lines 122--130
 
  []
 
-[9 <./fail2.png>] [10 <./success1.png>] [11 <./hover1.png> <./hover2.png>]
-Overfull \hbox (2.52881pt too wide) in paragraph at lines 112--113
+[10 <./fail2.png>] [11 <./success1.png>] [12 <./hover1.png> <./hover2.png>]
+Overfull \hbox (2.52881pt too wide) in paragraph at lines 136--137
 []\OT1/cmr/m/n/12 Details-on-Demand. Our vi-su-al-iza-tion sup-ports details-on
 -demand with
  []
 
-[12] <lonely.png, id=187, 525.965pt x 393.47pt>
+[13] <lonely.png, id=184, 525.965pt x 393.47pt>
 File: lonely.png Graphic file (type png)
  <use lonely.png>
-Package pdftex.def Info: lonely.png used on input line 120.
+Package pdftex.def Info: lonely.png used on input line 144.
 (pdftex.def)             Requested size: 397.48499pt x 297.36522pt.
 
-<fenway1.png, id=188, 794.97pt x 641.39626pt>
+<fenway1.png, id=185, 794.97pt x 641.39626pt>
 File: fenway1.png Graphic file (type png)
  <use fenway1.png>
-Package pdftex.def Info: fenway1.png used on input line 122.
+Package pdftex.def Info: fenway1.png used on input line 146.
 (pdftex.def)             Requested size: 397.48499pt x 320.70712pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 119--124
+Underfull \hbox (badness 10000) in paragraph at lines 143--148
 
  []
 
 
-Overfull \hbox (7.48499pt too wide) in paragraph at lines 119--124
+Overfull \hbox (7.48499pt too wide) in paragraph at lines 143--148
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 119--124
+Underfull \hbox (badness 10000) in paragraph at lines 143--148
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 119--124
+Underfull \hbox (badness 10000) in paragraph at lines 143--148
 
  []
 
 
-Overfull \hbox (7.48499pt too wide) in paragraph at lines 119--124
+Overfull \hbox (7.48499pt too wide) in paragraph at lines 143--148
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 119--124
+Underfull \hbox (badness 10000) in paragraph at lines 143--148
 
  []
 
-[13 <./lonely.png>] [14 <./fenway1.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 136.
- [15]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 136.
+[14 <./lonely.png>] [15 <./fenway1.png>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 160.
+ [16]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 160.
  (./Project_2.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 136.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 136.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 160.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 160.
 Package rerunfilecheck Info: File `Project_2.out' has not changed.
 (rerunfilecheck)             Checksum: 183937F875A9766A5AA0C9E1355FB225;999.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 136.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 160.
  ) 
 Here is how much of TeX's memory you used:
- 6196 strings out of 493488
- 88258 string characters out of 3141326
- 174179 words of memory out of 3000000
+ 6190 strings out of 493488
+ 88216 string characters out of 3141326
+ 173179 words of memory out of 3000000
  9366 multiletter control sequences out of 15000+200000
  13057 words of font info for 50 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
@@ -626,10 +627,10 @@ Here is how much of TeX's memory you used:
 sr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/
 local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/loc
 al/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on Project_2.pdf (16 pages, 9745849 bytes).
+Output written on Project_2.pdf (17 pages, 9747524 bytes).
 PDF statistics:
- 245 PDF objects out of 1000 (max. 8388607)
- 202 compressed objects within 3 object streams
- 57 named destinations out of 1000 (max. 500000)
+ 240 PDF objects out of 1000 (max. 8388607)
+ 197 compressed objects within 2 object streams
+ 51 named destinations out of 1000 (max. 500000)
  197 words of extra memory for PDF output out of 10000 (max. 10000000)
 

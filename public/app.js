@@ -1,7 +1,7 @@
 !function() {
   "use strict";
 
-  var clustering = new Clustering(150, 3);
+  var clustering = new Clustering(1500, 2);
   var socket = io.connect('http://localhost:3000');
   var twitter = socket.of('/twitter');
   var replay = socket.of('/replay');
@@ -70,6 +70,7 @@
     });
     
     var clusterMarkers = [];
+    var clusterCircles = [];
     twitter.on('data', function(d) {
       if (!d.coordinates) return;
       var c = d.coordinates.coordinates;
@@ -111,6 +112,10 @@
         marker.setMap(null);
       });
       
+      clusterCircles.forEach(function(circle) {
+        circle.setMap(null);
+      });
+      
       var seen_ids = {};
       clusters.forEach(function(cluster) {
         
@@ -150,6 +155,7 @@
         circle.bindTo('center', marker, 'position');
         
         clusterMarkers.push(marker);
+        clusterCircles.push(circle);
 
         // display cluster tweets in sidebar
         var el = $('#sidebar #' + cluster.id + '.cluster');
@@ -158,6 +164,16 @@
           el.addClass('cluster');
           el.attr('id', '' + cluster.id);
           el.css('backgroundColor', cluster.color);
+          el.onmouseover = function () {
+            marker.setIcon({
+              fillColor: cluster.color,
+              path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+              fillOpacity: 1,
+              strokeWeight: 5,
+              strokeColor: 'white',
+              scale: 10
+            });
+          };
           $('#sidebar').append(el);
         }
         el.empty();

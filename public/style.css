@@ -31,6 +31,16 @@ html, body, #map {
   width: 5px;
 }
 
+#sidebar .cluster:hover:after {
+  background-color: #eee;
+  content: ' ';
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 300px;
+  z-index: -1;
+}
+
 #sidebar .tweet {
   width: 275px;
   padding-left: 15px;

@@ -2,7 +2,7 @@
   "use strict";
 
   var clustering = new Clustering(150, 3);
-  var socket = io.connect('http://localhost:3000');
+  var socket = io.connect('http://pheme.avtok.com:80');
   var twitter = socket.of('/twitter');
   //var replay = socket.of('/replay');
 

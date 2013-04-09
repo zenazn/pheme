@@ -82,6 +82,7 @@
       var marker = new google.maps.Marker({
         map: map,
         draggable: false,
+        flat: true,
         animation: google.maps.Animation.DROP,
         position: new google.maps.LatLng(c[1] + skew(), c[0] + skew()),
         title: d.text,

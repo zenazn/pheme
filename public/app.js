@@ -1,14 +1,14 @@
 !function() {
   "use strict";
 
-  var clustering = new Clustering(1500, 2);
+  var clustering = new Clustering(150, 3);
   var socket = io.connect('http://localhost:3000');
   var twitter = socket.of('/twitter');
   //var replay = socket.of('/replay');
 
   var tweet_template = Handlebars.compile($('#tweet-template').html());
 
-  var token, map, clusters;
+  var token, map, clusters, cluster_markers = {};
 
   if (!localStorage.credentials) {
     twitter.emit('request_token');
@@ -69,8 +69,6 @@
       t = setTimeout(update_bounds.bind(null, map), 500);
     });
 
-    var clusterMarkers = [];
-    var clusterCircles = [];
     twitter.on('data', function(d) {
       if (!d.coordinates) return;
       var c = d.coordinates.coordinates;
@@ -108,15 +106,6 @@
       clustering.add(p);
       clusters = clustering.clusters();
 
-      // erase old cluster markers
-      clusterMarkers.forEach(function(marker) {
-        marker.setMap(null);
-      });
-
-      clusterCircles.forEach(function(circle) {
-        circle.setMap(null);
-      });
-
       var seen_ids = {};
       clusters.forEach(function(cluster) {
 
@@ -132,62 +121,67 @@
           });
         });
 
-        // draw cluster circles
-        var marker = new google.maps.Marker({
-          map: map,
-          draggable: false,
-          position: cluster.center,
-          icon: {
-            fillColor:cluster.color,
-            path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
-            fillOpacity: 1,
-            strokeWeight: 1,
-            strokeColor: 'black',
-            scale: 4
-          }
-        });
-
-        var circle = new google.maps.Circle({
-          map: map,
-          radius: cluster.radius,
-          fillColor: cluster.color,
-          fillOpacity: 0.2
-        });
-        circle.bindTo('center', marker, 'position');
-
-        clusterMarkers.push(marker);
-        clusterCircles.push(circle);
-
-        // display cluster tweets in sidebar
-        var el = $('#sidebar #' + cluster.id + '.cluster');
-        if (el.length == 0) {
-          el = $(document.createElement('div'));
-          el.addClass('cluster');
-          el.attr('id', '' + cluster.id);
-          el.css('backgroundColor', cluster.color);
-          el.onmouseover = function () {
-            marker.setIcon({
+        var markers = cluster_markers[cluster.id];
+        if (!markers) {
+          console.log('new cluster', cluster);
+          markers = cluster_markers[cluster.id] = {
+            center: new google.maps.Marker({
+              map: map,
+              draggable: false,
+              position: cluster.center,
+              icon: {
+                fillColor:cluster.color,
+                path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+                fillOpacity: 1,
+                strokeWeight: 1,
+                strokeColor: 'black',
+                scale: 4
+              }
+            }),
+            ring: new google.maps.Circle({
+              map: map,
+              radius: cluster.radius,
               fillColor: cluster.color,
-              path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
-              fillOpacity: 1,
-              strokeWeight: 5,
-              strokeColor: 'white',
-              scale: 10
-            });
+              fillOpacity: 0.2
+            }),
+            sidebar: $("<div></div>")
           };
-          $('#sidebar').append(el);
+          markers.ring.bindTo('center', markers.center, 'position');
+
+          // Set up sidebar element
+          markers.sidebar
+            .addClass('cluster')
+            .data('cluster', cluster.id)
+            .css('backgroundColor', cluster.color)
+            .hover(/* mouseenter */ function() {
+              var icon = markers.center.getIcon();
+              icon.scale = 10;
+              markers.center.setIcon(icon);
+            }, /* mouseleave */function() {
+              var icon = markers.center.getIcon();
+              icon.scale = 4;
+              markers.center.setIcon(icon);
+            });
+          $('#sidebar').append(markers.sidebar);
+        } else {
+          markers.center.setPosition(cluster.center);
+          markers.ring.setRadius(cluster.radius);
         }
+
+        var el = markers.sidebar;
         el.empty();
         cluster.points.forEach(function(point) {
           el.append(tweet_template(point.data));
         });
-        seen_ids['' + cluster.id] = true;
+
+        seen_ids[cluster.id] = true;
       });
 
-      $('#sidebar .cluster').each(function(i, el) {
-        if (!(el.id in seen_ids)) {
-          el.remove();
-        }
+      $.each(cluster_markers, function(k, markers) {
+        if (k in seen_ids) return;
+        markers.center.setMap(null);
+        markers.ring.setMap(null);
+        markers.sidebar.remove();
       });
     });
   });

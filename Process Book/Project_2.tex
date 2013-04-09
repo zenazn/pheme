@@ -46,15 +46,29 @@ Using Twitter's API, we pulled tweets, which contained several relevant pieces o
 \end{enumerate}
 
 \subsection{Scraping Method}
-%% For Carlllllll. Tell story like this:
-\begin{enumerate}
-\item Normal twitter stream is all historical.
-\item Want realtime twitter data.
-\item Lots of realtime twitter data doesn't have geographical data, which is essential; how did you solve?
-\item Challenge where you could only pull from certain locations.
-\item Fix of that bug.
-\item Any other challenges you can think of.
-\end{enumerate}
+
+Typically, Twitter's API allows you to view historical tweets, at most a few
+hundred at a time, using its REST API. Since we wanted to see tweets as they
+happened, we instead chose to rely on Twitter's streaming API, which is a
+mechanism by which you can express interest in a particular Twitter search
+query, and receive push updates from Twitter as new Tweets are written that
+match the query. This live stream is sometimes referred to as the ``Twitter
+Firehose,'' although Twitter only makes a subsampling of the full Firehose
+available for third party developers.
+
+Twitter's streaming API allows you to search for tweets by geographical
+location, so we established a connection to Twitter that requested the Tweets
+that would be visible on the user's screen. Each user needed to have their
+tweets scraped from a different live API feed, since different users can be
+visualizing different portions of the map at once.
+
+One particular challenge involved with Twitter's streaming feed was that of
+authentication. Twitter protects their streaming API using OAuth, which is a
+mechanism for authenticating individual Twitter users with third party
+applications. In order to get access to a live stream of tweets, we must prove
+to Twitter that we are doing it on behalf of a valid Twitter user, and obtaining
+these credentials is a particularly finicky multi-step process. Only after
+forcing users to authenticate can we proceed with our visualization.
 
 \section{Related Work}
 To the extent that we've used what we've learned so far in CS 171, all the readings and lecture materials are related work; when justifying our visualization choices or visualization evolution, we will refer to this material. We consulted documentation related to the Twitter API and the Google Maps API very often while working on this project. Finally, we were inspired to investigate and study tweets and their geographical data by a past CS 171 project: Tweetography. \\ \\
@@ -79,10 +93,20 @@ We faced two challenges when deciding how to construct and visualize our cluster
 
 \subsubsection{Clustering Algorithm}
 Our first task was to decide how to actually identify clusters of tweets; we knew that clusters would be based on geographical distance, but needed to decide on a specific clustering algorithm. Most traditional clustering algorithms, like k-means clustering, hierarchical clustering, and autoclass clustering, do not fit our visualization goal. Not only do they depend on the assumption that all the points to be clustered are available immediately - which is not true in our case, because tweets arrive in realtime in our visualization - they also try to fit every point to a cluster - which is not what we desire, because we only want to cluster points that we believe are close enough to actually be an event. Accordingly, we designed the following simple algorithm for clustering:
-%% TODO: Carl please describe algorithm here, and maybe discuss benefits and constants (threshold, maxDistance etc.)
-\begin{enumerate}
-\item
-\end{enumerate}
+
+First, we take the Cartesian distance between every two points in the system.
+Any pairs which are below some threshold distance (in our testing, we found that
+a distance of about 150 meters was appropriate), are considered part of the same
+cluster. Once a cluster has more than some minimum number of points (say,
+three), we emit it as a cluster, calculating its color, center, radius, and
+other information.
+
+By using a disjoint set data structure, we are able to maintain the information
+about which points ought to be clustered with which other points in an efficient
+manner. Furthermore, points can be considered as they arrive in an incremental
+fashion, as the introduction of a single point creates only a few new edges. In
+this fashion, we made our relatively simple clustering algorithm efficient
+enough for use with hundreds if not thousands of data points.
 
 \subsubsection{Visualizing Clusters}
 Once we decided upon the algorithm by which we would identify clusters, we had to decide how to visualize them. 

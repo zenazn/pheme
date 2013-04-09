@@ -68,7 +68,7 @@
       if (t) clearTimeout(t);
       t = setTimeout(update_bounds.bind(null, map), 500);
     });
-    
+
     var clusterMarkers = [];
     var clusterCircles = [];
     twitter.on('data', function(d) {
@@ -107,19 +107,19 @@
 
       clustering.add(p);
       clusters = clustering.clusters();
-      
+
       // erase old cluster markers
       clusterMarkers.forEach(function(marker) {
         marker.setMap(null);
       });
-      
+
       clusterCircles.forEach(function(circle) {
         circle.setMap(null);
       });
-      
+
       var seen_ids = {};
       clusters.forEach(function(cluster) {
-        
+
         // change color of points in cluster
         cluster.points.forEach(function(point) {
           point.data.marker.setIcon({
@@ -151,10 +151,10 @@
           map: map,
           radius: cluster.radius,
           fillColor: cluster.color,
-          fillOpacity: .2
+          fillOpacity: 0.2
         });
         circle.bindTo('center', marker, 'position');
-        
+
         clusterMarkers.push(marker);
         clusterCircles.push(circle);
 

@@ -49,7 +49,19 @@
   };
 
   Point.prototype.distance = function(other) {
-    return metric(this.pos, other.pos);
+    // XXX: this is a hack
+    var my_words = {}, similar = 1;
+    this.data.text.split(/\s+/).forEach(function(word) {
+      my_words[word] = true;
+    });
+    other.data.text.split(/\s+/).forEach(function(word) {
+      if (word in my_words) similar++
+    });
+    var same_person_penalty = 0;
+    if (this.data.handle == other.data.handle) {
+      same_person_penalty = 1500;
+    }
+    return metric(this.pos, other.pos) / similar + same_person_penalty;
   };
 
   function Clustering(max_distance, threshold) {

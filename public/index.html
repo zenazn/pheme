@@ -7,50 +7,55 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/style.css" />
   </head>
-  <body>
-    <div id="auth" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-header">
-        <h3>Please Authenticate With Twitter</h3>
-      </div>
-      <div class="modal-body">
+  <body class="twitter-bg">
+    <div class="container">
+      <h1>Pheme</h1>
+      <div class="hero-unit twitter-hero">
+        <h1>What's Happening?</h1>
         <p>
-          Pheme uses Twitter's Streaming API to visualize events as they occur.
-          However, Twitter agressively limits use of its API for
-          non-authenticated users. In order to prevent us from going over our
-          anonymous API request limit, we kindly ask that you authorize Pheme to
-          make API requests on your behalf.
+          Pheme allows you to visualize the world around you using live
+          streaming data from Twitter.
         </p>
         <p>
-          We will only access Twitter's public feed (and not any of your private
-          data), and will only use these access credentials while you remain on
-          this site.
+          <a class="btn btn-primary btn-large" href="/map.html">
+            Get Started &raquo;
+          </a>
         </p>
       </div>
-      <div class="modal-footer">
-        <!--<button id="auth-no" class="btn" data-dismiss="modal" aria-hidden="true">No Thanks</button> -->
-        <button id="auth-yes" class="btn btn-primary">Authenticate</button>
-      </div>
+      <ul class="thumbnails howto">
+        <li class="span4">
+          <div class="thumbnail">
+            <img src="/img/howto2.png" width="300" height="200">
+            <h3>Watch Clusters Form</h3>
+            <p>
+              Points will fall as data from Twitter arrives. As Pheme detects
+              events, it will highlight them in a different color.
+            </p>
+          </div>
+        </li>
+        <li class="span4">
+          <div class="thumbnail">
+            <img src="/img/howto3.png" width="300" height="200">
+            <h3>Explore The Tweets</h3>
+            <p>
+              Hover over tweets to explore the data in depth.
+            </p>
+          </div>
+        </li>
+        <li class="span4">
+          <div class="thumbnail">
+            <img src="/img/howto4.png" width="300" height="200">
+            <h3>Discover Events</h3>
+            <p>
+              The sidebar allows you to drill down on an individual cluster to
+              figure out what's happening at the event.
+            </p>
+          </div>
+        </li>
+      </ul>
     </div>
-    <div id="map"></div>
-    <div id="sidebar">
-      <h2>Clusters</h2>
-    </div>
-
-    <!-- Handlebars template -->
-    <script id="tweet-template" type="text/x-handlebars-template">
-      <div class="tweet">
-      <h4 class="handle">@{{handle}}</h4>
-      <h5 class="name">{{name}}</h5>
-      <p class="tweet-body">{{text}}</p>
-      </div>
-    </script>
-
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.min.js"></script>
-    <script src="//maps.googleapis.com/maps/api/js?sensor=false&libraries=geometry"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/cluster.js"></script>
-    <script src="/app.js"></script>
+    <script src="/intro.js"></script>
   </body>
 </html>

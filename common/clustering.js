@@ -36,13 +36,14 @@ define([
       this.neighborhood = neighborhood;
       this.threshold = threshold;
     },
-    add: function(point) {
+    push: function(point) {
       if (!(point instanceof DisjointSet)) {
         throw new TypeError("Expected a DisjointSet");
       }
       this.neighborhood.neighbors(point, function(neighbor) {
         point.union(neighbor);
       });
+      this.neighborhood.push(point);
     },
     /**
      * Return the set of clusters. This is a pretty expensive operation (it

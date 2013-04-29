@@ -16,7 +16,7 @@ define(['common/class', 'common/disjointset'], function(Class, DisjointSet) {
       this.points = [];
       this.metric = metric;
     },
-    add: function(el) {
+    push: function(el) {
       if (!(el instanceof DisjointSet)) {
         throw new TypeError("Expected a DisjointSet");
       }

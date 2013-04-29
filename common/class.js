@@ -10,6 +10,8 @@
 if (typeof define !== 'function') { var define = require('amdefine')(module) }
 
 define(function() {
+  "use strict";
+
   var initializing = false, fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
 
   // The base Class implementation (does nothing)

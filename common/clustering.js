@@ -29,9 +29,6 @@ define([
       if (!(neighborhood instanceof Neighborhood)) {
         throw new TypeError("Expected a Neighborhood");
       }
-      if (typeof threshold != 'number') {
-        throw new TypeError("Threshold must be a number");
-      }
 
       this.neighborhood = neighborhood;
       this.threshold = threshold;

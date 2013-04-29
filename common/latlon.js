@@ -17,23 +17,23 @@ define(['common/class'], function(Class) {
     init: function(lat, lon) {
       // We store lat and lon in radians to optimize for the common case of
       // calculating distances.
-      this.lat = to_radians(lat);
-      this.lon = to_radians(lon);
+      this._lat = to_radians(lat);
+      this._lon = to_radians(lon);
     },
     // Haversine distance
     // http://www.movable-type.co.uk/scripts/latlong.html
     distance: function(other) {
-      var dlat = sin((other.lat - this.lat)/2);
-      var dlon = sin((other.lon - this.lon)/2);
+      var dlat = sin((other._lat - this._lat)/2);
+      var dlon = sin((other._lon - this._lon)/2);
 
       var a = dlat * dlat +
-              dlon * dlon * cos(this.lat) * cos(other.lat);
+              dlon * dlon * cos(this._lat) * cos(other._lat);
       var c = 2 * atan2(sqrt(a), sqrt(1 - a));
 
       return earth_radius * c;
     },
-    lat: function() { return to_degrees(this.lat); },
-    lon: function() { return to_degrees(this.lon); }
+    lat: function() { return to_degrees(this._lat); },
+    lon: function() { return to_degrees(this._lon); }
   });
 
   return LatLon;

@@ -23,18 +23,12 @@ define([
   'handlebars',
   'marker',
   'common/geolib',
+  'map',
   'bootstrap',
-  'async!http://maps.googleapis.com/maps/api/js?sensor=false&libraries=geometry',
-], function($, PhemeClustering, LatLon, stream, handlebars, marker, geolib) {
+], function($, PhemeClustering, LatLon, stream, handlebars, marker, geolib, map) {
   "use strict";
 
   var clustering = new PhemeClustering();
-
-  var map = new google.maps.Map(document.getElementById('map'), {
-    center: new google.maps.LatLng(42.37839, -71.11291),
-    zoom: 12,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  });
 
   var tweet_template = Handlebars.compile($('#tweet-template').html());
 
@@ -45,8 +39,8 @@ define([
   ];
 
   var previous_bounds = '';
-  function update_bounds(map) {
-    var bounds = map.getBounds();
+  function update_bounds() {
+    var bounds = map.map.getBounds();
     var ne = bounds.getNorthEast(), sw = bounds.getSouthWest();
     var floor = function(n) { return Math.floor(n * 4) / 4; };
     var ceil = function(n) { return Math.ceil(n * 4) / 4; };
@@ -54,17 +48,16 @@ define([
       floor(sw.lng()), floor(sw.lat()),
       ceil(ne.lng()), ceil(ne.lat())
     ].join(',');
-    if (sessionStorage['stream'] && bounds != previous_bounds) {
+    if (sessionStorage.stream && bounds != previous_bounds) {
       console.log("Panning to", bounds);
       stream.emit('stream', {locations: bounds});
       previous_bounds = bounds;
     }
   }
-
-  var t = setTimeout(update_bounds.bind(null, map), 500);
-  map.addListener('bounds_changed', function() {
+  var t = setTimeout(update_bounds, 500);
+  map.map.addListener('bounds_changed', function() {
     if (t) clearTimeout(t);
-    t = setTimeout(update_bounds.bind(null, map), 500);
+    t = setTimeout(update_bounds, 500);
   });
 
   var cluster_markers = {};
@@ -73,7 +66,7 @@ define([
     var point = clustering.push(d);
     if (!point) return;
 
-    point.data.marker = marker(map, point.pos);
+    point.data.marker = new map.Marker(point.pos);
 
     var clusters = clustering.clusters(), seen_ids = {};
 
@@ -82,46 +75,20 @@ define([
       var color = colors[cluster.id % colors.length];
       var points = cluster.points.map(function(p) { return p.pos; });
       var center = geolib.centroid(points);
-      center = google.maps.LatLng(center.lat(), center.lon());
       var radius = geolib.radius(points, center);
 
       // change color of points in cluster
       cluster.points.forEach(function(point) {
-        point.data.marker.setIcon({
-          fillColor: color,
-          path: google.maps.SymbolPath.CIRCLE,
-          fillOpacity: 1,
-          strokeWeight: 1,
-          strokeColor: 'black',
-          scale: 4
-        });
+        point.data.marker.setColor(color);
       });
+
       var markers = cluster_markers[cluster.id];
       if (!markers) {
         console.log('new cluster', cluster);
         markers = cluster_markers[cluster.id] = {
-          center: new google.maps.Marker({
-            map: map,
-            draggable: false,
-            position: center,
-            icon: {
-              fillColor: color,
-              path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
-              fillOpacity: 1,
-              strokeWeight: 1,
-              strokeColor: 'black',
-              scale: 4
-            }
-          }),
-          ring: new google.maps.Circle({
-            map: map,
-            radius: radius,
-            fillColor: color,
-            fillOpacity: 0.2
-          }),
+          marker: new map.ClusterMarker(center, radius, color),
           sidebar: $("<div></div>")
         };
-        markers.ring.bindTo('center', markers.center, 'position');
 
         // Set up sidebar element
         markers.sidebar
@@ -130,18 +97,14 @@ define([
           .css('backgroundColor', color)
           // Sometimes this glitches out and keeps a marker really big. IDK.
           .hover(/* mouseenter */ function() {
-            var icon = markers.center.getIcon();
-            icon.scale = 10;
-            markers.center.setIcon(icon);
+            markers.marker.setSize(10);
           }, /* mouseleave */function() {
-            var icon = markers.center.getIcon();
-            icon.scale = 4;
-            markers.center.setIcon(icon);
+            markers.marker.setSize(4);
           });
         $('#sidebar').append(markers.sidebar);
       } else {
-        markers.center.setPosition(center);
-        markers.ring.setRadius(radius);
+        markers.marker.setPosition(center);
+        markers.marker.setRadius(radius);
       }
 
       var el = markers.sidebar;
@@ -154,8 +117,7 @@ define([
     });
     $.each(cluster_markers, function(k, markers) {
       if (k in seen_ids) return;
-      markers.center.setMap(null);
-      markers.ring.setMap(null);
+      markers.marker.hide();
       markers.sidebar.remove();
     });
   });

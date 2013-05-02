@@ -56,6 +56,11 @@ define([
       icon.fillColor = color;
       this.marker.setIcon(icon);
     },
+    setOpacity: function(opacity) {
+      var icon = this.marker.getIcon();
+      icon.fillOpacity = opacity;
+      this.marker.setIcon(icon);
+    },
     setSize: function(size) {
       var icon = this.marker.getIcon();
       icon.scale = size;

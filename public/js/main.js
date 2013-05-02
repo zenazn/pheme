@@ -45,6 +45,12 @@ define([
   // Stopwords from http://norm.al/2009/04/14/list-of-english-stop-words/
   var stopwords = ["a","able","about","across","after","all","almost","also","am","among","an","and","any","are","as","at","be","because","been","but","by","can","cannot","could","dear","did","do","does","either","else","ever","every","for","from","get","got","had","has","have","he","her","hers","him","his","how","however","i","if","in","into","is","it","its","just","least","let","like","likely","may","me","might","most","must","my","neither","no","nor","not","of","off","often","on","only","or","other","our","own","rather","said","say","says","she","should","since","so","some","than","that","the","their","them","then","there","these","they","this","tis","to","too","twas","us","wants","was","we","were","what","when","where","which","while","who","whom","why","will","with","would","yet","you","your","RT"];
 
+  // Store all tweets in order of time received.
+  var tweets = [];
+
+  // Maximum age of tweet allowed
+  var maxTime = 60;
+
   var previous_bounds = '';
   function update_bounds() {
     var bounds = map.map.getBounds();
@@ -74,6 +80,23 @@ define([
     if (!point) return;
 
     point.data.marker = new map.Marker(point.pos);
+
+    tweets.push(point);
+
+    var curTime = new Date().getTime();
+    // Fade and remove old tweets
+    tweets = tweets.filter(function(tweet) {
+      var age = (curTime - tweet.time.getTime())/1000;
+      if (age > maxTime) {
+        tweet.data.marker.hide();
+        return false;
+      }
+      else {
+        var opacity = (maxTime - age)/maxTime;
+        tweet.data.marker.setOpacity(opacity);
+        return true;
+      }
+    });
 
     var clusters = clustering.clusters(), seen_ids = {};
 

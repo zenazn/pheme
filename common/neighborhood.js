@@ -47,7 +47,7 @@ define(['common/class', 'common/disjointset'], function(Class, DisjointSet) {
     },
     forEach: function(cb) {
        return this.points.forEach(cb);
-    };
+    }
   });
 
   return Neighborhood;

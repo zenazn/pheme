@@ -18,7 +18,7 @@ define(function() {
   function Class() {};
 
   // Create a new Class that inherits from this class
-  Class.extend = function(prop) {
+  var ex = Class.extend = function(prop) {
     var _super = this.prototype;
 
     // Instantiate a base class (but only create the instance,
@@ -66,7 +66,7 @@ define(function() {
     Class.prototype.constructor = Class;
 
     // And make this class extendable
-    Class.extend = arguments.callee;
+    Class.extend = ex;
 
     return Class;
   };

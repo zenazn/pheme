@@ -8,7 +8,7 @@ define(['common/class'], function(Class) {
   // Disjoint Set data structure. Mitzenmacher would love us!
   var DisjointSet = Class.extend({
     init: function(data) {
-      this.id = point_id++;
+      this.id = set_id++;
       this.data = data;
 
       this.parent = this;

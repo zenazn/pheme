@@ -3,7 +3,7 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 define(['common/class'], function(Class) {
   "use strict";
 
-  var earth_radius = 6371 * 1000;
+  var EARTH_RADIUS = 6371 * 1000;
 
   var sin = Math.sin, cos = Math.cos, atan2 = Math.atan2, sqrt = Math.sqrt;
   function to_radians(deg) {
@@ -30,7 +30,7 @@ define(['common/class'], function(Class) {
               dlon * dlon * cos(this._lat) * cos(other._lat);
       var c = 2 * atan2(sqrt(a), sqrt(1 - a));
 
-      return earth_radius * c;
+      return EARTH_RADIUS * c;
     },
     lat: function() { return to_degrees(this._lat); },
     lon: function() { return to_degrees(this._lon); }

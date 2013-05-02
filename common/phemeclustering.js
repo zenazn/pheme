@@ -3,8 +3,9 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 define([
   'common/latlon',
   'common/geotemporalset',
-  'common/geotemporalclustering'
-], function(LatLon, GeoTemporalSet, GeoTemporalClustering) {
+  'common/geotemporalclustering',
+  'common/clusterquality'
+], function(LatLon, GeoTemporalSet, GeoTemporalClustering, Q) {
   "use strict";
 
   var MAX_TIME = 30 * 60 * 1000; // milliseconds
@@ -24,7 +25,7 @@ define([
 
   var PhemeClustering = GeoTemporalClustering.extend({
     init: function() {
-      this._super(metric, MAX_DIST, MAX_TIME, CLUSTER_SIZE);
+      this._super(metric, 400 * MAX_DIST, MAX_TIME, CLUSTER_SIZE);
     },
     push: function(tweet) {
       if (!tweet.coordinates) return;
@@ -36,6 +37,9 @@ define([
       this._super(point);
 
       return point;
+    },
+    clusters: function() {
+      return Q.filter(this._super());
     }
   });
 

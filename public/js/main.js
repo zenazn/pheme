@@ -35,11 +35,12 @@ define([
   'handlebars',
   'common/geolib',
   'map',
+  'common/nlp',
   'd3',
   'crossfilter',
   'dc',
   'bootstrap'
-], function($, PhemeClustering, LatLon, stream, handlebars, geolib, map) {
+], function($, PhemeClustering, LatLon, stream, handlebars, geolib, map, nlp) {
   "use strict";
 
   var clustering = new PhemeClustering();
@@ -51,9 +52,6 @@ define([
     '#8dd3c7', '#ffffb3', '#bebada', '#fb8072', '#80b1d3', '#fdb462',
     '#b3de69', '#fccde5', '#d9d9d9', '#bc80bd', '#ccebc5', '#ffed6f'
   ];
-
-  // Stopwords from http://norm.al/2009/04/14/list-of-english-stop-words/
-  var stopwords = ["a","able","about","across","after","all","almost","also","am","among","an","and","any","are","as","at","be","because","been","but","by","can","cannot","could","dear","did","do","does","either","else","ever","every","for","from","get","got","had","has","have","he","her","hers","him","his","how","however","i","if","in","into","is","it","its","just","least","let","like","likely","may","me","might","most","must","my","neither","no","nor","not","of","off","often","on","only","or","other","our","own","rather","said","say","says","she","should","since","so","some","than","that","the","their","them","then","there","these","they","this","tis","to","too","twas","us","wants","was","we","were","what","when","where","which","while","who","whom","why","will","with","would","yet","you","your","RT"];
 
   // Store all tweets in order of time received.
   var tweets = [];
@@ -184,24 +182,7 @@ define([
       var center = geolib.centroid(points);
       var radius = geolib.radius(points, center);
 
-      // Word frequency analysis
-      var clusterText = [];
-      cluster.points.forEach(function(point) {
-        var text = point.data.text;
-        // clean tweet text
-        text = text.split(/\s+/g).map(function(word) {
-          return word.replace(/\W|_/, "");
-        }).filter(function(word) {
-          return (stopwords.indexOf(word) == -1);
-        });
-          clusterText = clusterText.concat(text);
-      });
-
-      // Count frequency of words, and take top 10 as tags.
-      var tags = {};
-      clusterText.forEach(function(word) {
-        tags[word] = (tags[word] || 0) + 1;
-      });
+      var tags = nlp.frequency(cluster.points);
 
       tags = d3.entries(tags).sort(function(a, b) {
         return b.value - a.value;

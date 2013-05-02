@@ -2,16 +2,15 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 
 define([
   'common/clustering',
-  'common/neighborhood',
+  'common/geotemporalneighborhood',
   'common/geotemporalset'
-], function(Clustering, Neighborhood, GeoTemporalSet) {
+], function(Clustering, GeoTemporalNeighborhood, GeoTemporalSet) {
   "use strict";
 
   var GeoTemporalClustering = Clustering.extend({
     init: function(metric, max_distance, max_time, threshold) {
-      // TODO: Write GeoTemporalNeighborhood
-      var neighborhood = new Neighborhood(metric);
-      this._super(neighborhood, threshold);
+      var gtn = new GeoTemporalNeighborhood(metric, max_distance, max_time);
+      this._super(gtn, threshold);
     },
     push: function(point) {
       if (!(point instanceof GeoTemporalSet)) {

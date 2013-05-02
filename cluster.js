@@ -5,6 +5,7 @@ var zlib  = require('zlib');
 
 var StreamClusterer = require('./lib/streamclusterer');
 var JSONStream      = require('./lib/jsonstream');
+var Lines           = require('./lib/lines');
 
 
 var json = new JSONStream();
@@ -14,13 +15,14 @@ var files = process.argv.slice(2);
 
 function processFile() {
   if (files.length == 0) {
-    console.log("DONEEE");
     json.end();
+    console.log("LE FIN");
+    process.exit(0);
     return;
   }
   var file = fs.createReadStream(files.shift());
   var gz = zlib.createGunzip();
-  file.pipe(gz).pipe(json, {end: false});
+  file.pipe(gz).pipe(new Lines()).pipe(json, {end: false});
   file.on('end', function() {
     console.log("WUT");
     processFile();

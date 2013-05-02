@@ -23,6 +23,14 @@ define([
   var PhemeClustering = GeoTemporalClustering.extend({
     init: function() {
       this._super(metric, MAX_DIST, MAX_TIME, CLUSTER_SIZE);
+    },
+    push: function(tweet) {
+      var time = new Date(tweet.created_at);
+      var coords = tweet.coordinates.coordinates;
+      var pos = new LatLon(coords[1], coords[0]);
+
+      var point = new GeoTemporalSet(time, pos, tweet);
+      this._super(point);
     }
   });
 

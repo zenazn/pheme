@@ -20,7 +20,7 @@ define(['common/class', 'common/disjointset'], function(Class, DisjointSet) {
       if (!(el instanceof DisjointSet)) {
         throw new TypeError("Expected a DisjointSet");
       }
-      this.points.append(el);
+      this.points.push(el);
     },
     /**
      * Return a list of the neighbors to a given point, or if the optional

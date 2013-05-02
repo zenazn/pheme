@@ -34,6 +34,8 @@ define([
 
       var point = new GeoTemporalSet(time, pos, tweet);
       this._super(point);
+
+      return point;
     }
   });
 

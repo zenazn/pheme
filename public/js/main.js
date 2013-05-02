@@ -22,9 +22,10 @@ define([
   'twitterstream',
   'handlebars',
   'marker',
+  'common/geolib',
   'bootstrap',
   'async!http://maps.googleapis.com/maps/api/js?sensor=false&libraries=geometry',
-], function($, PhemeClustering, LatLon, stream, handlebars, marker) {
+], function($, PhemeClustering, LatLon, stream, handlebars, marker, geolib) {
   "use strict";
 
   var clustering = new PhemeClustering();
@@ -36,6 +37,12 @@ define([
   });
 
   var tweet_template = Handlebars.compile($('#tweet-template').html());
+
+  // 12 qualitative colors from http://colorbrewer2.org/
+  var colors = [
+    '#8dd3c7', '#ffffb3', '#bebada', '#fb8072', '#80b1d3', '#fdb462',
+    '#b3de69', '#fccde5', '#d9d9d9', '#bc80bd', '#ccebc5', '#ffed6f'
+  ];
 
   var previous_bounds = '';
   function update_bounds(map) {
@@ -71,10 +78,17 @@ define([
     var clusters = clustering.clusters(), seen_ids = {};
 
     clusters.forEach(function(cluster) {
+      // Compatability stuff
+      var color = colors[cluster.id % colors.length];
+      var points = cluster.points.map(function(p) { return p.pos; });
+      var center = geolib.centroid(points);
+      center = google.maps.LatLng(center.lat(), center.lon());
+      var radius = geolib.radius(points, center);
+
       // change color of points in cluster
       cluster.points.forEach(function(point) {
         point.data.marker.setIcon({
-          fillColor: cluster.color,
+          fillColor: color,
           path: google.maps.SymbolPath.CIRCLE,
           fillOpacity: 1,
           strokeWeight: 1,
@@ -89,9 +103,9 @@ define([
           center: new google.maps.Marker({
             map: map,
             draggable: false,
-            position: cluster.center,
+            position: center,
             icon: {
-              fillColor:cluster.color,
+              fillColor: color,
               path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
               fillOpacity: 1,
               strokeWeight: 1,
@@ -101,8 +115,8 @@ define([
           }),
           ring: new google.maps.Circle({
             map: map,
-            radius: cluster.radius,
-            fillColor: cluster.color,
+            radius: radius,
+            fillColor: color,
             fillOpacity: 0.2
           }),
           sidebar: $("<div></div>")
@@ -113,7 +127,7 @@ define([
         markers.sidebar
           .addClass('cluster')
           .data('cluster', cluster.id)
-          .css('backgroundColor', cluster.color)
+          .css('backgroundColor', color)
           // Sometimes this glitches out and keeps a marker really big. IDK.
           .hover(/* mouseenter */ function() {
             var icon = markers.center.getIcon();
@@ -126,8 +140,8 @@ define([
           });
         $('#sidebar').append(markers.sidebar);
       } else {
-        markers.center.setPosition(cluster.center);
-        markers.ring.setRadius(cluster.radius);
+        markers.center.setPosition(center);
+        markers.ring.setRadius(radius);
       }
 
       var el = markers.sidebar;

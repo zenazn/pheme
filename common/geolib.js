@@ -41,9 +41,9 @@ define(['common/latlon'], function(LatLon) {
       center = centroid(points);
     }
     // You end up calculating one distance twice. "Oh well!"
-    var max_distance = points[0].distance(c);
+    var max_distance = points[0].distance(center);
     points.forEach(function(point) {
-      max_distance = Math.max(point.distance(c), max_distance);
+      max_distance = Math.max(point.distance(center), max_distance);
     });
 
     return max_distance;

@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Pheme</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Pheme</h1>
+      <div class="well">
+        <p>We've pre-recorded some events for your viewing pleasure.</p>
+      </div>
+      <div id="events">
+      </div>
+    </div>
+    <!-- Handlebars template -->
+    <script id="event-template" type="text/x-handlebars-template">
+      <div class="event span3" data-file="{{file}}">
+        <div class="inner">
+          <h4>{{name}}</h4>
+        </div>
+      </div>
+    </script>
+    <script data-main="js/events.js" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.5/require.min.js"></script>
+  </body>
+</html>

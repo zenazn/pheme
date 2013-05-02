@@ -3,7 +3,7 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 define(['common/class'], function(Class) {
   "use strict";
 
-  var earth_radius = 6371;
+  var earth_radius = 6371 * 1000;
 
   var sin = Math.sin, cos = Math.cos, atan2 = Math.atan2, sqrt = Math.sqrt;
   function to_radians(deg) {

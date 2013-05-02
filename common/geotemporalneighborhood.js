@@ -12,6 +12,7 @@ define([
     this.max_distance = max_distance;
     this.truncate = truncate;
     this.bands = [];
+    this.count = 0;
 
     var nbands = Math.ceil(Math.PI * radius / max_distance);
     var rads_per_band = max_distance / radius;
@@ -24,10 +25,15 @@ define([
   }
   Globe.prototype.push = function(point) {
     // XXX: abstraction!
-    var idx = Math.floor(point.pos._lat * this.radius / this.max_distance);
+    var lat = point.pos._lat + Math.PI / 2;
+    var idx = Math.floor(lat * this.radius / this.max_distance);
     this.bands[idx].push(point);
+    if (++this.count % 2000 == 0) {
+      console.log("point", this.count);
+    }
   };
   Globe.prototype.forEach = function(lat, lon, start_time, cb) {
+    lat += Math.PI / 2;
     var idx = Math.floor(lat * this.radius / this.max_distance);
     var lo = Math.max(idx - 1, 0), hi = Math.min(idx + 1, this.bands.length - 1);
     for (var i = lo; i <= hi; i++) {
@@ -142,7 +148,7 @@ define([
       this.max_distance = max_distance;
       this.max_time = max_time;
       // TODO: truncate?
-      this.globe = new Globe(EARTH_RADIUS, max_distance, false);
+      this.globe = new Globe(EARTH_RADIUS, max_distance, true);
     },
     push: function(el) {
       if (!(el instanceof GeoTemporalSet)) {
@@ -169,7 +175,10 @@ define([
       });
     },
     forEach: function(cb) {
-      this.globe.all(0, cb);
+      this.globe.all(0, function(point) {
+        cb(point);
+        return true;
+      });
     }
   });
 

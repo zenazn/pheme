@@ -6,11 +6,15 @@ requirejs.config({
     jquery: '//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min',
     'socket.io': '//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.10/socket.io.min',
     handlebars: '//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.min',
-    bootstrap: '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min'
+    bootstrap: '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min',
+    d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.0.8/d3.min'
   },
   shim: {
     bootstrap: {
       deps: ['jquery']
+    },
+    'd3': {
+      exports: 'd3'
     }
   }
 });
@@ -23,7 +27,8 @@ define([
   'handlebars',
   'common/geolib',
   'map',
-  'bootstrap',
+  'd3',
+  'bootstrap'
 ], function($, PhemeClustering, LatLon, stream, handlebars, geolib, map) {
   "use strict";
 
@@ -36,6 +41,9 @@ define([
     '#8dd3c7', '#ffffb3', '#bebada', '#fb8072', '#80b1d3', '#fdb462',
     '#b3de69', '#fccde5', '#d9d9d9', '#bc80bd', '#ccebc5', '#ffed6f'
   ];
+
+  // Stopwords from http://norm.al/2009/04/14/list-of-english-stop-words/
+  var stopwords = ["a","able","about","across","after","all","almost","also","am","among","an","and","any","are","as","at","be","because","been","but","by","can","cannot","could","dear","did","do","does","either","else","ever","every","for","from","get","got","had","has","have","he","her","hers","him","his","how","however","i","if","in","into","is","it","its","just","least","let","like","likely","may","me","might","most","must","my","neither","no","nor","not","of","off","often","on","only","or","other","our","own","rather","said","say","says","she","should","since","so","some","than","that","the","their","them","then","there","these","they","this","tis","to","too","twas","us","wants","was","we","were","what","when","where","which","while","who","whom","why","will","with","would","yet","you","your","RT"];
 
   var previous_bounds = '';
   function update_bounds() {
@@ -76,6 +84,53 @@ define([
       var center = geolib.centroid(points);
       var radius = geolib.radius(points, center);
 
+      // Word frequency analysis
+      var clusterText = [];
+      cluster.points.forEach(function(point) {
+        var text = point.data.text;
+        // clean tweet text
+        text = text.split(/\s+/g).map(function(word) {
+          return word.replace(/\W|_/, "");
+        }).filter(function(word) {
+          return (stopwords.indexOf(word) == -1);
+        });
+          clusterText = clusterText.concat(text);
+      });
+
+      // Count frequency of words, and take top 10 as tags.
+      var tags = {};
+      clusterText.forEach(function(word) {
+        tags[word] = (tags[word] || 0) + 1;
+      });
+
+      tags = d3.entries(tags).sort(function(a, b) {
+        return b.value - a.value;
+      }).slice(0,10);
+
+      var maxCount = tags[0].value;
+      var minCount = tags[tags.length - 1].value - 1;
+
+      tags = tags.sort(function(a, b) {
+        return (b.key < a.key);
+      });
+
+      // Color gradient using d3
+      var wordcolor = d3.scale.linear()
+        .domain([0,1])
+        .range(["grey", color]);
+
+      // Create simple wordcloud display element
+      var wordCloud = document.createElement("div");
+      wordCloud.className = "wordCloud";
+      tags.forEach(function(word) {
+        var size = (word.value - minCount)/(maxCount - minCount) * 15 + 5;
+        var tag = document.createElement("span");
+        tag.style.fontSize = size + "px";
+        tag.style.color = wordcolor((word.value-minCount)/(maxCount-minCount));
+        tag.innerHTML = word.key;
+        wordCloud.appendChild(tag);
+      });
+
       // change color of points in cluster
       cluster.points.forEach(function(point) {
         point.data.marker.setColor(color);
@@ -111,6 +166,8 @@ define([
       cluster.points.forEach(function(point) {
         el.append(tweet_template(point.data));
       });
+
+      el.append(wordCloud);
 
       seen_ids[cluster.id] = true;
     });

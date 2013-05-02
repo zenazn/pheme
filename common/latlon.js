@@ -7,7 +7,7 @@ define(['common/class'], function(Class) {
 
   var sin = Math.sin, cos = Math.cos, atan2 = Math.atan2, sqrt = Math.sqrt;
   function to_radians(deg) {
-    return deg * Math.PI / 180;
+    return (deg % 360) * Math.PI / 180;
   }
   function to_degrees(rad) {
     return rad * 180 / Math.PI;
@@ -18,7 +18,7 @@ define(['common/class'], function(Class) {
       // We store lat and lon in radians to optimize for the common case of
       // calculating distances.
       this._lat = to_radians(lat);
-      this._lon = to_radians(lon);
+      this._lon = (to_radians(lon) + 2 * Math.PI) % (2 * Math.PI);
     },
     // Haversine distance
     // http://www.movable-type.co.uk/scripts/latlong.html

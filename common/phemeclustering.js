@@ -24,7 +24,7 @@ define([
 
   var PhemeClustering = GeoTemporalClustering.extend({
     init: function() {
-      this._super(metric, MAX_DIST, MAX_TIME, CLUSTER_SIZE);
+      this._super(metric, 400 * MAX_DIST, MAX_TIME, CLUSTER_SIZE);
     },
     push: function(tweet) {
       if (!tweet.coordinates) return;

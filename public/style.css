@@ -85,3 +85,14 @@ html, body {
   display: inline;
   padding: 2px;
 }
+
+#events .event {
+  background-color: #eee;
+  min-height: 200px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#events .inner {
+  padding: 10px;
+  text-align: center;
+}

@@ -12,18 +12,10 @@ requirejs.config({
     dc: '../libraries/dc'
   },
   shim: {
-    bootstrap: {
-      deps: ['jquery']
-    },
-    'd3': {
-      exports: 'd3'
-    },
-    'crossfilter': {
-      exports: 'crossfilter'
-    },
-    'dc': {
-      exports: 'dc'
-    }
+    bootstrap: { deps: ['jquery'] },
+    d3: { exports: 'd3' },
+    crossfilter: { exports: 'crossfilter' },
+    dc: { exports: 'dc' }
   }
 });
 

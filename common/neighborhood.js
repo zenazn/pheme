@@ -36,7 +36,7 @@ define(['common/class', 'common/disjointset'], function(Class, DisjointSet) {
         cb = points.push.bind(points);
       }
       this.points.forEach(function(point) {
-        if (metric(point.data, el.data)) {
+        if (metric(point, el)) {
           cb(point);
         }
       });

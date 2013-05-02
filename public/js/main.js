@@ -21,11 +21,10 @@ define([
   'common/LatLon',
   'twitterstream',
   'handlebars',
-  'marker',
   'common/geolib',
   'map',
   'bootstrap',
-], function($, PhemeClustering, LatLon, stream, handlebars, marker, geolib, map) {
+], function($, PhemeClustering, LatLon, stream, handlebars, geolib, map) {
   "use strict";
 
   var clustering = new PhemeClustering();

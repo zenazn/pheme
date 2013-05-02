@@ -7,7 +7,9 @@ requirejs.config({
     'socket.io': '//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.10/socket.io.min',
     handlebars: '//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.min',
     bootstrap: '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min',
-    d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.0.8/d3.min'
+    d3: '//cdnjs.cloudflare.com/ajax/libs/d3/3.0.8/d3.min',
+    crossfilter: '//cdnjs.cloudflare.com/ajax/libs/crossfilter/1.1.3/crossfilter.min',
+    dc: '../libraries/dc'
   },
   shim: {
     bootstrap: {
@@ -15,6 +17,12 @@ requirejs.config({
     },
     'd3': {
       exports: 'd3'
+    },
+    'crossfilter': {
+      exports: 'crossfilter'
+    },
+    'dc': {
+      exports: 'dc'
     }
   }
 });
@@ -28,6 +36,8 @@ define([
   'common/geolib',
   'map',
   'd3',
+  'crossfilter',
+  'dc',
   'bootstrap'
 ], function($, PhemeClustering, LatLon, stream, handlebars, geolib, map) {
   "use strict";
@@ -49,7 +59,7 @@ define([
   var tweets = [];
 
   // Maximum age of tweet allowed
-  var maxTime = 60;
+  var maxTime = 300;
 
   var previous_bounds = '';
   function update_bounds() {
@@ -75,25 +85,92 @@ define([
 
   var cluster_markers = {};
 
+  var stuff = crossfilter(tweets);
+
+  var tweetsByMin = stuff.dimension(function (d) {
+    return d3.time.minute(d.date);
+  });
+
+  var tweetsByMinGroup = tweetsByMin.group().reduceSum(function(d) { 
+    return 1; 
+  });
+
+  dc.barChart("#timedensity")
+    .width(990) // (optional) define chart width, :default = 200
+    .height(250) // (optional) define chart height, :default = 200
+    .transitionDuration(100) // (optional) define chart transition duration, :default = 500
+    // (optional) define margins
+    .margins({top: 10, right: 50, bottom: 30, left: 40})
+    .dimension(tweetsByMin) // set dimension
+    .group(tweetsByMinGroup) // set group
+    // (optional) whether chart should rescale y axis to fit data, :default = false
+    .elasticY(true)
+    // (optional) when elasticY is on whether padding should be applied to y axis domain, :default=0
+    // (optional) whether chart should rescale x axis to fit data, :default = false
+    .elasticX(true)
+    // (optional) when elasticX is on whether padding should be applied to x axis domain, :default=0
+    .xAxisPadding(0)
+    // define x scale
+    .x(d3.time.scale().domain([new Date(1985, 0, 1), new Date(2013, 11, 31)]))
+    // (optional) set filter brush rounding
+    .y([0, 10])
+    .round(d3.time.minute.round)
+    // define x axis units
+    .xUnits(d3.time.minutes)
+    // (optional) whether bar should be center to its x value, :default=false
+    .centerBar(true)
+    // (optional) render horizontal grid lines, :default=false
+    .renderHorizontalGridLines(true)
+    // (optional) render vertical grid lines, :default=false
+    .renderVerticalGridLines(true)
+    // (optional) add stacked group and custom value retriever
+    .brushOn(true)
+    // (optional) whether svg title element(tooltip) should be generated for each bar using
+    // the given function, :default=no
+    .title(function(d) { return "Value: " + d.value; })
+    // (optional) whether chart should render titles, :default = false
+    .renderTitle(true);
+
+  var tweetsByMin = stuff.dimension(function (d) {
+    return d3.time.minute(d.date);
+  });
+
+  var tweetsByMinGroup = tweetsByMin.group().reduceSum(function(d) { 
+    return 1; 
+  });
+
+  dc.renderAll();
+
   stream.on('data', function(d) {
     var point = clustering.push(d);
+
     if (!point) return;
 
     point.data.marker = new map.Marker(point.pos);
 
-    tweets.push(point);
+    tweets.push({
+      date: point.time,
+      point: point
+    });
 
-    var curTime = new Date().getTime();
+    stuff.add([{
+      date: point.time,
+      point: point
+    }]);
+
+    dc.redrawAll();
+
     // Fade and remove old tweets
+    var curTime = new Date().getTime();
     tweets = tweets.filter(function(tweet) {
-      var age = (curTime - tweet.time.getTime())/1000;
+      var age = (curTime - tweet.date.getTime())/1000;
       if (age > maxTime) {
-        tweet.data.marker.hide();
+        tweet.point.data.marker.hide();
         return false;
       }
       else {
         var opacity = (maxTime - age)/maxTime;
-        tweet.data.marker.setOpacity(opacity);
+        tweet.point.data.marker.setOpacity(opacity);
         return true;
       }
     });

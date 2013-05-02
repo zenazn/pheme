@@ -18,7 +18,13 @@ define(['common/class'], function(Class) {
       // We store lat and lon in radians to optimize for the common case of
       // calculating distances.
       this._lat = to_radians(lat);
-      this._lon = (to_radians(lon) + 2 * Math.PI) % (2 * Math.PI);
+      this._lon = to_radians(lon);
+      // This is dumb
+      while (this._lon < 0)           this._lon += 2 * Math.PI;
+      while (this._lon > 2 * Math.PI) this._lon -= 2 * Math.PI;
+      if (this._lat < -Math.PI / 2 || this._lat > Math.PI / 2) {
+        throw new Error("LatLon error");
+      }
     },
     // Haversine distance
     // http://www.movable-type.co.uk/scripts/latlong.html

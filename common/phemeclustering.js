@@ -3,8 +3,9 @@ if (typeof define !== 'function') { var define = require('amdefine')(module) }
 define([
   'common/latlon',
   'common/geotemporalset',
-  'common/geotemporalclustering'
-], function(LatLon, GeoTemporalSet, GeoTemporalClustering) {
+  'common/geotemporalclustering',
+  'common/clusterquality'
+], function(LatLon, GeoTemporalSet, GeoTemporalClustering, Q) {
   "use strict";
 
   var MAX_TIME = 30 * 60 * 1000; // milliseconds
@@ -36,6 +37,9 @@ define([
       this._super(point);
 
       return point;
+    },
+    clusters: function() {
+      return Q.filter(this._super());
     }
   });
 

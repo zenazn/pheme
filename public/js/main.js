@@ -18,7 +18,7 @@ requirejs.config({
 define([
   'jquery',
   'common/phemeclustering',
-  'common/LatLon',
+  'common/latlon',
   'twitterstream',
   'common/geolib',
   'map',

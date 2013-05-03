@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  2 MAY 2013 18:21
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  2 MAY 2013 20:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -286,7 +286,7 @@ less on input line 16.
 Package Fancyhdr Warning: \fancyhead's `E' option without twoside option is use
 less on input line 17.
 
-No file Project_3.aux.
+(./Project_3.aux)
 \openout1 = `Project_3.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 19.
@@ -303,6 +303,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 19.
 LaTeX Font Info:    ... okay on input line 19.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 19.
 LaTeX Font Info:    ... okay on input line 19.
+
 (/usr/local/texlive/2012/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count110
@@ -345,14 +346,15 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 19.
 LaTeX Info: Redefining \pageref on input line 19.
 LaTeX Info: Redefining \nameref on input line 19.
+
+(./Project_3.out) (./Project_3.out)
 \@outlinefile=\write3
 \openout3 = `Project_3.out'.
 
-
-(./title.tex <twitterlogo.jpg, id=4, 948.54375pt x 653.44125pt>
+ (./title.tex
+<twitterlogo.jpg, id=80, 948.54375pt x 653.44125pt>
 File: twitterlogo.jpg Graphic file (type jpg)
-
-<use twitterlogo.jpg>
+ <use twitterlogo.jpg>
 Package pdftex.def Info: twitterlogo.jpg used on input line 6.
 (pdftex.def)             Requested size: 58.49762pt x 40.29158pt.
 LaTeX Font Info:    Try loading font information for U+msa on input line 23.
@@ -367,9 +369,10 @@ File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 ) [1
 
 {/usr/local/texlive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./twitt
-erlogo.jpg>])
+erlogo.jpg>]) (./Project_3.toc)
 \tf@toc=\write4
 \openout4 = `Project_3.toc'.
+
 
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -388,7 +391,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 40--40
 00m-users-in-june-2012-
  []
 
-[2] [3] <tweetography.png, id=44, 640.3925pt x 348.30125pt>
+[2] [3] <tweetography.png, id=133, 640.3925pt x 348.30125pt>
 File: tweetography.png Graphic file (type png)
 
 <use tweetography.png>
@@ -427,7 +430,7 @@ Overfull \hbox (14.97913pt too wide) in paragraph at lines 83--84
 b.io/dc.js/. 
  []
 
-<project2.png, id=50, 1440.38126pt x 766.865pt>
+<project2.png, id=138, 1440.38126pt x 766.865pt>
 File: project2.png Graphic file (type png)
  <use project2.png>
 Package pdftex.def Info: project2.png used on input line 88.
@@ -447,116 +450,250 @@ Underfull \hbox (badness 10000) in paragraph at lines 87--91
 
  []
 
-[5 <./project2.png>] <pheme2.jpg, id=58, 803.0pt x 612.2875pt>
-File: pheme2.jpg Graphic file (type jpg)
+[5 <./project2.png>] <splash.png, id=145, 998.73125pt x 740.7675pt>
+File: splash.png Graphic file (type png)
 
-<use pheme2.jpg>
-Package pdftex.def Info: pheme2.jpg used on input line 114.
-(pdftex.def)             Requested size: 397.48499pt x 303.08792pt.
+<use splash.png>
+Package pdftex.def Info: splash.png used on input line 112.
+(pdftex.def)             Requested size: 397.48499pt x 294.80972pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 113--115
+Underfull \hbox (badness 10000) in paragraph at lines 111--114
 
  []
 
 
-Overfull \hbox (7.48499pt too wide) in paragraph at lines 113--115
+Overfull \hbox (7.48499pt too wide) in paragraph at lines 111--114
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 113--115
+Underfull \hbox (badness 10000) in paragraph at lines 111--114
+
+ []
+
+[6] <splash2.png, id=161, 981.6675pt x 806.01125pt>
+File: splash2.png Graphic file (type png)
+ <use splash2.png>
+Package pdftex.def Info: splash2.png used on input line 116.
+(pdftex.def)             Requested size: 397.48499pt x 326.35898pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 115--118
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 113--115
+Overfull \hbox (7.48499pt too wide) in paragraph at lines 115--118
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 115--118
 
  []
 
-[6] [7 <./pheme2.jpg>]
-Overfull \hbox (2.52881pt too wide) in paragraph at lines 130--131
+[7 <./splash.png>] <pheme2.jpg, id=166, 803.0pt x 612.2875pt>
+File: pheme2.jpg Graphic file (type jpg)
+ <use pheme2.jpg>
+Package pdftex.def Info: pheme2.jpg used on input line 121.
+(pdftex.def)             Requested size: 397.48499pt x 303.08792pt.
+
+<cloud1.png, id=167, 271.0125pt x 219.31938pt>
+File: cloud1.png Graphic file (type png)
+ <use cloud1.png>
+Package pdftex.def Info: cloud1.png used on input line 123.
+(pdftex.def)             Requested size: 397.48499pt x 321.67944pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 120--125
+
+ []
+
+
+Overfull \hbox (7.48499pt too wide) in paragraph at lines 120--125
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 120--125
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 120--125
+
+ []
+
+
+Overfull \hbox (7.48499pt too wide) in paragraph at lines 120--125
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 120--125
+
+ []
+
+[8 <./splash2.png>] [9 <./pheme2.jpg>] [10 <./cloud1.png>]
+<toomuch.png, id=183, 404.51125pt x 315.1775pt>
+File: toomuch.png Graphic file (type png)
+ <use toomuch.png>
+Package pdftex.def Info: toomuch.png used on input line 132.
+(pdftex.def)             Requested size: 397.48499pt x 309.70865pt.
+
+<pheme4.jpg, id=184, 803.0pt x 639.38875pt>
+File: pheme4.jpg Graphic file (type jpg)
+ <use pheme4.jpg>
+Package pdftex.def Info: pheme4.jpg used on input line 134.
+(pdftex.def)             Requested size: 397.48499pt x 316.50328pt.
+
+<fading.png, id=185, 521.95pt x 355.3275pt>
+File: fading.png Graphic file (type png)
+ <use fading.png>
+Package pdftex.def Info: fading.png used on input line 136.
+(pdftex.def)             Requested size: 397.48499pt x 270.59929pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 131--138
+
+ []
+
+
+Overfull \hbox (7.48499pt too wide) in paragraph at lines 131--138
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 131--138
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 131--138
+
+ []
+
+
+Overfull \hbox (7.48499pt too wide) in paragraph at lines 131--138
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 131--138
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 131--138
+
+ []
+
+
+Overfull \hbox (7.48499pt too wide) in paragraph at lines 131--138
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 131--138
+
+ []
+
+[11] [12 <./toomuch.png>] [13 <./pheme4.jpg>]
+<lonely.png, id=200, 525.965pt x 393.47pt>
+File: lonely.png Graphic file (type png)
+ <use lonely.png>
+Package pdftex.def Info: lonely.png used on input line 143.
+(pdftex.def)             Requested size: 397.48499pt x 297.36522pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 142--146
+
+ []
+
+
+Overfull \hbox (7.48499pt too wide) in paragraph at lines 142--146
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 142--146
+
+ []
+
+[14 <./fading.png>] [15 <./lonely.png>]
+Overfull \hbox (2.52881pt too wide) in paragraph at lines 159--160
 []\OT1/cmr/m/n/12 Details-on-Demand. Our vi-su-al-iza-tion sup-ports details-on
 -demand with
  []
 
-<lonely.png, id=85, 525.965pt x 393.47pt>
+[16]
 File: lonely.png Graphic file (type png)
  <use lonely.png>
-Package pdftex.def Info: lonely.png used on input line 138.
+Package pdftex.def Info: lonely.png used on input line 167.
 (pdftex.def)             Requested size: 397.48499pt x 297.36522pt.
-
-<fenway1.png, id=86, 794.97pt x 641.39626pt>
+ <fenway1.png, id=218, 794.97pt x 641.39626pt>
 File: fenway1.png Graphic file (type png)
- <use fenway1.png>
-Package pdftex.def Info: fenway1.png used on input line 140.
+
+<use fenway1.png>
+Package pdftex.def Info: fenway1.png used on input line 169.
 (pdftex.def)             Requested size: 397.48499pt x 320.70712pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 137--142
+Underfull \hbox (badness 10000) in paragraph at lines 166--171
 
  []
 
 
-Overfull \hbox (7.48499pt too wide) in paragraph at lines 137--142
+Overfull \hbox (7.48499pt too wide) in paragraph at lines 166--171
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 137--142
+Underfull \hbox (badness 10000) in paragraph at lines 166--171
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 137--142
+Underfull \hbox (badness 10000) in paragraph at lines 166--171
 
  []
 
 
-Overfull \hbox (7.48499pt too wide) in paragraph at lines 137--142
+Overfull \hbox (7.48499pt too wide) in paragraph at lines 166--171
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 137--142
+Underfull \hbox (badness 10000) in paragraph at lines 166--171
 
  []
 
-[8] [9 <./lonely.png>] [10 <./fenway1.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 154.
- [11]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 154.
+[17] [18] [19 <./fenway1.png>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 183.
+ [20]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 183.
  (./Project_3.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 154.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 154.
-
-
-Package rerunfilecheck Warning: File `Project_3.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `Project_3.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  F6BDB23D954E7576A46C9384EA231F6D;1175.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 154.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 183.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 183.
+Package rerunfilecheck Info: File `Project_3.out' has not changed.
+(rerunfilecheck)             Checksum: F6BDB23D954E7576A46C9384EA231F6D;1175.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 183.
  ) 
 Here is how much of TeX's memory you used:
- 6141 strings out of 493488
- 87485 string characters out of 3141326
- 173075 words of memory out of 3000000
- 9324 multiletter control sequences out of 15000+200000
- 13057 words of font info for 50 fonts, out of 3000000 for 9000
+ 6212 strings out of 493488
+ 88420 string characters out of 3141326
+ 173179 words of memory out of 3000000
+ 9369 multiletter control sequences out of 15000+200000
+ 13404 words of font info for 51 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
- 29i,10n,43p,1072b,385s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 29i,10n,43p,1591b,407s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 ></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb
-></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
-/usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></u
-sr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/
-local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/loc
-al/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on Project_3.pdf (12 pages, 2841338 bytes).
+></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb>
+</usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></
+usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></us
+r/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/l
+ocal/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/loca
+l/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+Output written on Project_3.pdf (21 pages, 4658940 bytes).
 PDF statistics:
- 152 PDF objects out of 1000 (max. 8388607)
- 123 compressed objects within 2 object streams
- 58 named destinations out of 1000 (max. 500000)
- 31 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 286 PDF objects out of 1000 (max. 8388607)
+ 239 compressed objects within 3 object streams
+ 70 named destinations out of 1000 (max. 500000)
+ 213 words of extra memory for PDF output out of 10000 (max. 10000000)
 

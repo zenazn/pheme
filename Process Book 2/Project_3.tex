@@ -108,19 +108,46 @@ These issues and goals presented both significant technical and visualization de
 
 \subsection{Visualization Evolution}
 \subsubsection{User Flow}
+One of the biggest problems with our project II was that it was confusing to new users who did not have access to our process book. To address this issue, we decided to make a splash page explaining the key parts of our visualization, as shown below: \\ \\
+\includegraphics[width=5.5in]{splash.png} \\ \\
+In this way, we strengthen the narrative of our visualize; while our visualization does not tell a specific story (since it allows users to discover interesting stories in the world), it does this with specific progression. It \emph{opens} by loading tweets and identifying clusters; users watch as clusters form on the map. The \emph{middle} of this progression allows users to inspect individual tweets on the map by hovering over them, allowing them to understand the social data being produced in and around clusters as the clusters are identified. The \emph{closing} of our visualization allows users to  .
+
+In addition, one of our major goals was to allow users explore pre-recorded events. This helps address one of the issues we experienced in project II; there was often insufficient live streaming twitter data in a particular locale and at a particular time (because we only get a subsample of the full Twitter firehose), and thus tweets arrived slowly. Now, our visualization is compelling to users even in such a situation, because they can use the visualization to explore events that have been pre-recorded when live data is too sparse. By clicking on the ``Watch Pre-Recorded Events" button on the page shown above, the user is brought to the following page: \\ \\
+\includegraphics[width=5.5in]{splash2.png} \\ \\
+which displays a list of pre-recorded events that they can view in our visualization. 
 
 \subsubsection{Natural Language Processing}
 To allow users to learn more about the subject matter of an event, we proposed a complicated visualization that would use several techniques to analyze and visualize this content: \\ \\
 \includegraphics[width=5.5in]{pheme2.jpg} \\ \\
+We first decided to attempt to make the word cloud aspect of this proposed visualization. We initially used the http://www.jasondavies.com/wordcloud/ package for generating word clouds. Our first iteration was filled with common english words that provided no significant content, like ``the," ``are" etc. Accordingly, after doing some research, we realized that one of the most common steps in processing natural language is to first filter out what is known as ``stop words" - common words in the english language that crowd out the interesting frequency data; we took a list of ``stop words" from  http://norm.al/2009/04/14/list-of-english-stop-words/. After this filtration, we arrived at a word cloud similar to the following for all the tweet data on the screen: \\ \\
+\includegraphics[width=5.5in]{cloud1.png} \\ \\
+After some thought, we decided that this was not particularly helpful for viewers, for several reasons. First, the cloud only provided aggregate data about all tweets on screen; however, we were interested in the content of specific clusters. Second, while the bright colors, rotation of words, and large quantity of words were certainly visually attractive, it made it very hard for the viewer to perform any useful visual query on the cloud. Finally, if we put a standalone word cloud on the map, the most important part of our visualization - the map - became uncomfortably small.
+
+Accordingly, we decided on a different use for the word cloud. First, we reduced the number of words in each word cloud to only $10$, so that users would only be presented with the most important words, and be able to quickly enumerate through them. Second, we changed the presentation of the word cloud. Rather than have words rotated at some multiple of $90$ degrees, we instead presented all words in the same orientation, one after the other, so that users could actually read all the words in the word cloud. Furthermore, we encoded the frequency of the word with a dual encoding, using both color and font size, as Tufte suggests. The color we used for each word cloud corresponds to the color we labeled each cluster with; we applied a gradient going from the color of the cluster to grey, so that more important/frequent words were not only bigger, but more colorful. Finally, we used these word clouds as labels for the clusters in the sidebar of our visualization by generating one for each cluster. By combining the sidebar in our original visualization with this new word cloud example, we not only save space and help the viewer associate the textual content of a cluster with the tweets within that cluster (since both are now contained in the sidebar), but also address our original concern that word clouds should provide data about the content of individual clusters rather than aggregate data about all the tweets on the map. We did all this by writing our own simple implementation of a word cloud, rather than using an third-party library. 
+
+We know that word clouds are often frowned upon \footnote{http://www.niemanlab.org/2011/10/word-clouds-considered-harmful/}, but we've attempted to address many of the issues raised about word clouds (by removing extraneous words, increasing the viewer's ability to perform visual queries on data, and removing chart junk like extraneous color); we believe the final result is both effective at visualizing the textual information contained in a cluster of tweets, and still visually attractive. 
 
 \subsubsection{Tweet Fading}
+Another problem we experienced in Project II was that our visualization became both slow and difficult to read as more tweets came in. For example, after only a few minutes at a relatively high zoom, our visualization would look like the following: \\ \\
+\includegraphics[width=5.5in]{toomuch.png} \\ \\
+As shown above, the tweet density rapidly became very high in certain regions, making it hard to read individual tweets, and slowing down the underlying google maps visualization. To address this problem, we suggested a simple solution: fade out old tweets. We envisioned the process would look something like the following: \\ \\
+\includegraphics[width=5.5in]{pheme4.jpg} \\ \\
+Our final implementation is very similar. The opacity of a tweet slowly decreases as time goes on, as shown below: \\ \\
+\includegraphics[width=5.5in]{fading.png} \\ \\
+Furthermore, if tweets reached a certain age, they would disappear completely; this helps not only reduce clutter, but increase the performance of our visualization. The speed of fading, and the age at which the tweets 
 
 \subsubsection{Clustering Improvements}
+In Project II, one of the issues we noticed was a significant percentage of bad clusters. We identified two major reasons why these clusters were occuring. 
 
+First, we noticed that many of our clusters resulted from a single person tweeting multiple times rapidly form the same location. For example, one of the clusters we found in our original visualization was as follows: \\ \\
+\includegraphics[width=5.5in]{lonely.png} \\ \\
+This is a single person tweeting to tens or hundreds of other people asking them to follow him/her. Clearly this type of cluster is not actually an event. Accordingly, we designed several ``quality" checks to make sure that the clusters we identified were actually interesting. In particular we checked if:
+\begin{enumerate}
+\item $\frac{[\text{\# of authors}]}{[\text{\# of tweets}]} < 40\%$. We made this check because it is likely that the clusters of tweets that are most likely to correspond to real events, rather than several local friends tweeting at each other or a single person tweeting from the same place frequently, are clusters where many different people have tweeted in the same location. Thus, we reject all clusters where there are relatively few authors per tweet, since that implies that the majority of tweets were authored by the same person. 
+\item Reject if $[\text{\# of tweets}] < 6$ and no two tweets share at least one word. We made this check because we didn't want to cluster tweets that happened to be geographically close together by chance. Accordingly, if there are only a few tweets in our cluster, we make sure that they are related by checking if they share words; however, if there are large number of tweets in our cluster, it is extremely unlikely they occurred by chance, and thus don't need to make that check.
+\end{enumerate}
 
-
-
-
+Second, we noticed that if we let our clustering algorithm run for long periods of time, the clusters we identified would continue to grow larger. This is because our original algorithm adds a new tweet to a cluster when the new tweet is close to \emph{any} of the tweets currently in the cluster. Accordingly, the larger a cluster is, the more likely it is that a new tweet will join to it; there is an unwanted snowball effect. To combat this effect while still maintaining an incremental clustering algorithm (so that our visualization would run at reasonable speeds), we included a temporal aspect to the ``closeness" metric in our clustering algorithm. In particular, when we measure how far away two tweets are, we measure their distance not only geographically, but also temporally. With this new metric, a large cluster isn't quite as likely to snowball in size, since new tweets are only ``close" to tweets in the cluster that are relatively recent. 
 
 \section{Visualizations and Discussion} 
 \subsection{Visualization}
@@ -128,7 +155,7 @@ Our visualization allows the user to select a geography of interest, and to draw
 \begin{enumerate}
 \item Linking \& Brushing. Our visualization has two views, the map - which displays the geographical location of tweets and clusters - and the cluster sidebar - which contains a list of all clusters currently identified and the member tweets of each cluster. We support linking \& brushing by interactively highlighting the cluster marker on the map (by making it larger) when ther viewer hovers over the cluster in the cluster sidebar. 
 \item Details-on-Demand. Our visualization supports details-on-demand with a tool tip. Whenever a user hovers over an individual tweet on the map, regardless of whether or not it is in a cluster, a tool tip will appear after a short delay showing the text contained in the tweet. 
-\item Drill-Down/Filter Capability. Our visualization suuports a drill-down or filtering interaction by allowing users to drag the map viewport and zoom in or out of the viewport as desired. In this way, the user can exactly specify what geographical area they wish to pull tweets and identify clusters in; the visualization responds by drilling-down/filtering tweets to match this specification.
+\item Drill-Down/Filter Capability. Our visualization suuports a drill-down or filtering interaction by allowing users to drag the map viewport and zoom in or out of the viewport as desired. In this way, the user can exactly specify what geographical area they wish to pull tweets and identify clusters in; the visualization responds by drilling-down/filtering tweets to match this specification. 
 \end{enumerate}
 
 \subsection{Discussion}

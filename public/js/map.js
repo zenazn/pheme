@@ -66,6 +66,9 @@ define([
       icon.scale = size;
       this.marker.setIcon(icon);
     },
+    setTitle: function(title) {
+      this.marker.setTitle(title);
+    },
     show: function() {
       this.marker.setMap(map);
       this.shown = true;

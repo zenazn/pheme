@@ -43,7 +43,7 @@ define([
   var tweets = [];
 
   // Maximum age of tweet allowed
-  var maxTime = 300;
+  var maxTime = 1200;
 
   var previous_bounds = '';
   function update_bounds() {
@@ -61,30 +61,27 @@ define([
       previous_bounds = bounds;
     }
   }
-  var t = setTimeout(update_bounds, 500);
-  map.map.addListener('bounds_changed', function() {
-    if (t) clearTimeout(t);
-    t = setTimeout(update_bounds, 500);
-  });
 
   var cluster_markers = {};
 
   // Do periodic tasks, like fading and drawing things
   setInterval(function() {
     // Fade and remove old tweets
-    var curTime = new Date().getTime();
-    tweets = tweets.filter(function(tweet) {
-      var age = (curTime - tweet.date.getTime())/1000;
-      if (age > maxTime) {
-        tweet.point.data.marker.hide();
-        return false;
-      }
-      else {
-        var opacity = (maxTime - age)/maxTime;
-        tweet.point.data.marker.setOpacity(opacity);
-        return true;
-      }
-    });
+    if (!window.location.hash) {
+      var curTime = new Date().getTime();
+      tweets = tweets.filter(function(tweet) {
+        var age = (curTime - tweet.time.getTime())/1000;
+        if (age > maxTime) {
+          tweet.data.marker.hide();
+          return false;
+        }
+        else {
+          var opacity = (maxTime - age)/maxTime;
+          tweet.data.marker.setOpacity(opacity);
+          return true;
+        }
+      });
+    }
 
     scrubber.draw(tweets);
 
@@ -178,17 +175,31 @@ define([
     });
   }, 1000);
 
-  stream.on('data', function(d) {
+  function add_tweet(d) {
     var point = clustering.push(d);
     if (!point) return;
 
     scrubber.add(point);
 
     point.data.marker = new map.Marker(point.pos);
+    point.data.marker.setTitle(point.data.text);
 
-    tweets.push({
-      date: point.time,
-      point: point
+    tweets.push(point);
+  }
+
+  if (window.location.hash) {
+    var file = window.location.hash.substr(1);
+    d3.json('/traces/' + file, function(data) {
+      data.forEach(add_tweet);
     });
-  });
+  } else {
+    stream.on('data', add_tweet);
+
+    // Allow the user to scrub
+    var t = setTimeout(update_bounds, 500);
+    map.map.addListener('bounds_changed', function() {
+      if (t) clearTimeout(t);
+      t = setTimeout(update_bounds, 500);
+    });
+  }
 });

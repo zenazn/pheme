@@ -59,22 +59,22 @@ define(['d3'], function(d3) {
     if (!brush.empty()) {
       var range = brush.extent();
       tweets.forEach(function(tweet) {
-        if (tweet.date > range[1] || tweet.date < range[0]) {
-          if (tweet.point.data.marker.shown) {
-            tweet.point.data.marker.hide();  
+        if (tweet.time > range[1] || tweet.time < range[0]) {
+          if (tweet.data.marker.shown) {
+            tweet.data.marker.hide();
           }
         }
         else {
-          if (!tweet.point.data.marker.shown) {
-            tweet.point.data.marker.show();
+          if (!tweet.data.marker.shown) {
+            tweet.data.marker.show();
           }
         }
       });
     }
     else {
       tweets.forEach(function(tweet) {
-        if (!tweet.point.data.marker.shown) {
-            tweet.point.data.marker.show();
+        if (!tweet.data.marker.shown) {
+            tweet.data.marker.show();
         }
       });
     }

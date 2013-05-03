@@ -26,9 +26,9 @@ define(['common/latlon'], function(LatLon) {
     points.forEach(function(point) {
       var rlat = to_rad(point.lat());
       var rlon = to_rad(point.lon());
-      x += Math.cos(rlat) * Math.cos(rlon) * 1000;
-      y += Math.cos(rlat) * Math.sin(rlon) * 1000;
-      z += Math.sin(rlat) * 1000;
+      x += Math.cos(rlat) * Math.cos(rlon);
+      y += Math.cos(rlat) * Math.sin(rlon);
+      z += Math.sin(rlat);
     });
 
     x /= points.length;

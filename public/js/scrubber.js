@@ -9,7 +9,7 @@ define(['d3'], function(d3) {
 
   var x = d3.time.scale(), y = d3.scale.linear();
   var svg = d3.select('#scrubber').append('svg'), g = svg.append('g');
-  var axg = g.append('g'), brg = g.append('g');
+  var axg = g.append('g'), brg = g.append('g'), arp = g.append('path');
 
   function draw_scrubber() {
     // Inspiration from http://bl.ocks.org/mbostock/1667367#index.html
@@ -19,9 +19,10 @@ define(['d3'], function(d3) {
 
     svg.attr('width', width + margin.left + margin.right);
     svg.attr('height', height + margin.top + margin.bottom);
+    g.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
     var hist = d3.layout.histogram()
-      .bins(Math.ceil((d3.max(data) - d3.min(data)) / 10000)) // 10s hunks
+      .bins(Math.ceil((d3.max(data) - d3.min(data)) / 1000)) // 1s hunks
       (data);
 
     x.range([0, width]).domain(d3.extent(hist.map(function(d) { return d.x })));
@@ -38,9 +39,8 @@ define(['d3'], function(d3) {
       .y0(height)
       .y1(function(d) { return y(d.y); });
 
-    g.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-      .append('path').datum(hist)
-      .attr('d', area);
+
+    arp.datum(hist).attr('d', area);
 
     axg.attr('class', 'x axis')
       .attr('transform', 'translate(0,' + height + ')')

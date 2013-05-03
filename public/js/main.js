@@ -83,13 +83,6 @@ define([
       point: point
     });
 
-    stuff.add([{
-      date: point.time,
-      point: point
-    }]);
-
-    dc.redrawAll();
-
     // Fade and remove old tweets
     var curTime = new Date().getTime();
     tweets = tweets.filter(function(tweet) {

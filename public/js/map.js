@@ -83,6 +83,7 @@ define([
     init: function(pos, radius, color) {
       if (!color) color = 'blue';
       this._super(pos, color);
+      this.marker.position = pos_to_latlng(pos, false);
       this.ring = new google.maps.Circle({
         map: map,
         radius: radius,
@@ -100,6 +101,9 @@ define([
         strokeColor: 'black',
         scale: 4
       };
+    },
+    setPosition: function(pos) {
+      this.marker.setPosition(pos_to_latlng(pos, false));
     },
     setRadius: function(radius) {
       this.ring.setRadius(radius);

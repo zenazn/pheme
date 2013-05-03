@@ -11,7 +11,7 @@ define(['common/latlon'], function(LatLon) {
     return deg * Math.PI / 180;
   }
   function to_deg(rad) {
-    return rad * 180 / Math.pi
+    return rad * 180 / Math.PI;
   }
 
   function centroid(points) {
@@ -20,19 +20,26 @@ define(['common/latlon'], function(LatLon) {
     }
 
     // Latitudes
-    var lat = 0, lon, lonx = 0, lony = 0;
+    var x = 0;
+    var y = 0;
+    var z = 0;
     points.forEach(function(point) {
-      // Bad Carl. _lat and _lon are probably private. Just flipping back and
-      // forth between radians and degrees seems silly to me.
-      lat += point._lat;
-      lonx += Math.cos(point._lon);
-      lony += Math.sin(point._lon);
+      var rlat = to_rad(point.lat());
+      var rlon = to_rad(point.lon());
+      x += Math.cos(rlat) * Math.cos(rlon) * 1000;
+      y += Math.cos(rlat) * Math.sin(rlon) * 1000;
+      z += Math.sin(rlat) * 1000;
     });
 
-    lat /= points.length;
-    lon = Math.atan(lony / points.length, lonx / points.length);
+    x /= points.length;
+    y /= points.length;
+    z /= points.length;
 
-    return new LatLon(to_deg(lat), to_deg(lon));
+    var rlon = Math.atan2(y, x);
+    var hyp = Math.sqrt(x*x + y*y);
+    var rlat = Math.atan2(z, hyp);
+
+    return new LatLon(to_deg(rlat), to_deg(rlon));
   }
 
   function radius(points, /* optional */ center) {

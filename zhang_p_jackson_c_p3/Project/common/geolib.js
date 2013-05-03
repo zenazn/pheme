@@ -24,9 +24,9 @@ define(['common/latlon'], function(LatLon) {
     points.forEach(function(point) {
       // Bad Carl. _lat and _lon are probably private. Just flipping back and
       // forth between radians and degrees seems silly to me.
-      lat += point._lat;
-      lonx += Math.cos(point._lon);
-      lony += Math.sin(point._lon);
+      lat += point.lat();
+      lonx += Math.cos(point.lon());
+      lony += Math.sin(point.lon());
     });
 
     lat /= points.length;

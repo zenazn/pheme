@@ -71,6 +71,13 @@ define(['d3'], function(d3) {
         }
       });
     }
+    else {
+      tweets.forEach(function(tweet) {
+        if (!tweet.point.data.marker.shown) {
+            tweet.point.data.marker.show();
+        }
+      });
+    }
   }
 
   return {

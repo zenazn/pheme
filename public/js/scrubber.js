@@ -12,7 +12,7 @@ define(['d3'], function(d3) {
   var svg = d3.select('#scrubber').append('svg'), g = svg.append('g');
   var axg = g.append('g'), arp = g.append('path'), brg = g.append('g');
 
-  function draw_scrubber() {
+  function draw_scrubber(tweets) {
     // Inspiration from http://bl.ocks.org/mbostock/1667367#index.html
     var margin = {top: 10, right: 10, bottom: 25, left: 10};
     var width = el.width() - margin.left - margin.right;
@@ -31,7 +31,7 @@ define(['d3'], function(d3) {
 
     var xAxis = d3.svg.axis().scale(x).orient('bottom');
 
-    brush.x(x).on('brush', update);
+    brush.x(x).on('brush', update(tweets));
 
     var area = d3.svg.area()
       .interpolate('monotone')
@@ -55,11 +55,22 @@ define(['d3'], function(d3) {
 
   }
 
-  function update() {
+  function update(tweets) {
     if (!brush.empty()) {
-      console.log(brush.extent());
+      var range = brush.extent();
+      tweets.forEach(function(tweet) {
+        if (tweet.date > range[1] || tweet.date < range[0]) {
+          if (tweet.point.data.marker.shown) {
+            tweet.point.data.marker.hide();  
+          }
+        }
+        else {
+          if (!tweet.point.data.marker.shown) {
+            tweet.point.data.marker.show();
+          }
+        }
+      });
     }
-    console.log('hi');
   }
 
   return {

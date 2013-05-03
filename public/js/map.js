@@ -28,7 +28,7 @@ define([
   var Marker = Class.extend({
     init: function(pos, color) {
       if (!color) color = 'blue';
-
+      this.shown = true;
       this.marker = new google.maps.Marker({
         map: map,
         draggable: false,
@@ -68,9 +68,11 @@ define([
     },
     show: function() {
       this.marker.setMap(map);
+      this.shown = true;
     },
     hide: function() {
       this.marker.setMap(null);
+      this.shown = false;
     }
   });
 

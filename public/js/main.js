@@ -86,7 +86,7 @@ define([
       }
     });
 
-    scrubber.draw();
+    scrubber.draw(tweets);
 
     var clusters = clustering.clusters(), seen_ids = {};
 

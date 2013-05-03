@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Pheme</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div id="auth" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-header">
+        <h3>Please Authenticate With Twitter</h3>
+      </div>
+      <div class="modal-body">
+        <p>
+          Pheme uses Twitter's Streaming API to visualize events as they occur.
+          However, Twitter agressively limits use of its API for
+          non-authenticated users. In order to prevent us from going over our
+          anonymous API request limit, we kindly ask that you authorize Pheme to
+          make API requests on your behalf.
+        </p>
+        <p>
+          We will only access Twitter's public feed (and not any of your private
+          data), and will only use these access credentials while you remain on
+          this site.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <!--<button id="auth-no" class="btn" data-dismiss="modal" aria-hidden="true">No Thanks</button> -->
+        <button id="auth-yes" class="btn btn-primary">Authenticate</button>
+      </div>
+    </div>
+    <div id="map"></div>
+    <div id="scrubber"></div>
+    <div id="sidebar">
+      <h2>Clusters</h2>
+    </div>
+
+    <!-- Handlebars template -->
+    <script id="tweet-template" type="text/x-handlebars-template">
+      <div class="tweet">
+      <h4 class="handle">@{{user.screen_name}}</h4>
+      <h5 class="name">{{user.name}}</h5>
+      <p class="tweet-body">{{text}}</p>
+      </div>
+    </script>
+
+    <script data-main="js/main.js" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.5/require.min.js"></script>
+  </body>
+</html>

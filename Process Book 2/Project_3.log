@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  3 MAY 2013 00:18
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  3 MAY 2013 00:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -352,7 +352,7 @@ LaTeX Info: Redefining \nameref on input line 19.
 \openout3 = `Project_3.out'.
 
  (./title.tex
-<twitterlogo.jpg, id=92, 948.54375pt x 653.44125pt>
+<twitterlogo.jpg, id=100, 948.54375pt x 653.44125pt>
 File: twitterlogo.jpg Graphic file (type jpg)
  <use twitterlogo.jpg>
 Package pdftex.def Info: twitterlogo.jpg used on input line 6.
@@ -391,7 +391,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 41--41
 00m-users-in-june-2012-
  []
 
-[3] <tweetography.png, id=148, 640.3925pt x 348.30125pt>
+[3] <tweetography.png, id=158, 640.3925pt x 348.30125pt>
 File: tweetography.png Graphic file (type png)
 
 <use tweetography.png>
@@ -424,7 +424,7 @@ Overfull \hbox (24.26607pt too wide) in paragraph at lines 90--91
 009/04/14/list-
  []
 
-<project2.png, id=153, 1440.38126pt x 766.865pt>
+<project2.png, id=164, 1440.38126pt x 766.865pt>
 File: project2.png Graphic file (type png)
  <use project2.png>
 Package pdftex.def Info: project2.png used on input line 96.
@@ -445,7 +445,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 95--99
  []
 
 [5 <./tweetography.png>] [6 <./project2.png>] [7]
-<splash.png, id=181, 998.73125pt x 740.7675pt>
+<splash.png, id=190, 998.73125pt x 740.7675pt>
 File: splash.png Graphic file (type png)
  <use splash.png>
 Package pdftex.def Info: splash.png used on input line 181.
@@ -465,7 +465,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 180--183
 
  []
 
-[8] <splash2.png, id=188, 981.6675pt x 806.01125pt>
+[8] <splash2.png, id=196, 981.6675pt x 806.01125pt>
 File: splash2.png Graphic file (type png)
  <use splash2.png>
 Package pdftex.def Info: splash2.png used on input line 185.
@@ -485,13 +485,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 184--187
 
  []
 
-[9 <./splash.png>] <pheme2.jpg, id=193, 803.0pt x 612.2875pt>
+[9 <./splash.png>] <pheme2.jpg, id=201, 803.0pt x 612.2875pt>
 File: pheme2.jpg Graphic file (type jpg)
  <use pheme2.jpg>
 Package pdftex.def Info: pheme2.jpg used on input line 190.
 (pdftex.def)             Requested size: 397.48499pt x 303.08792pt.
 
-<cloud1.png, id=194, 271.0125pt x 219.31938pt>
+<cloud1.png, id=202, 271.0125pt x 219.31938pt>
 File: cloud1.png Graphic file (type png)
  <use cloud1.png>
 Package pdftex.def Info: cloud1.png used on input line 192.
@@ -527,19 +527,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 189--194
  []
 
 [10 <./splash2.png>] [11 <./pheme2.jpg>] [12 <./cloud1.png>]
-<toomuch.png, id=211, 404.51125pt x 315.1775pt>
+<toomuch.png, id=219, 404.51125pt x 315.1775pt>
 File: toomuch.png Graphic file (type png)
  <use toomuch.png>
 Package pdftex.def Info: toomuch.png used on input line 201.
 (pdftex.def)             Requested size: 397.48499pt x 309.70865pt.
 
-<pheme4.jpg, id=212, 803.0pt x 639.38875pt>
+<pheme4.jpg, id=220, 803.0pt x 639.38875pt>
 File: pheme4.jpg Graphic file (type jpg)
  <use pheme4.jpg>
 Package pdftex.def Info: pheme4.jpg used on input line 203.
 (pdftex.def)             Requested size: 397.48499pt x 316.50328pt.
 
-<fading.png, id=213, 521.95pt x 355.3275pt>
+<fading.png, id=221, 521.95pt x 355.3275pt>
 File: fading.png Graphic file (type png)
  <use fading.png>
 Package pdftex.def Info: fading.png used on input line 205.
@@ -590,7 +590,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 200--207
  []
 
 [13] [14 <./toomuch.png>] [15 <./pheme4.jpg>]
-<lonely.png, id=227, 525.965pt x 393.47pt>
+<lonely.png, id=235, 525.965pt x 393.47pt>
 File: lonely.png Graphic file (type png)
  <use lonely.png>
 Package pdftex.def Info: lonely.png used on input line 212.
@@ -611,19 +611,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 211--215
  []
 
 [16 <./fading.png>] [17 <./lonely.png>]
-<pheme3.jpg, id=238, 803.0pt x 607.26875pt>
+<pheme3.jpg, id=246, 803.0pt x 607.26875pt>
 File: pheme3.jpg Graphic file (type jpg)
  <use pheme3.jpg>
 Package pdftex.def Info: pheme3.jpg used on input line 223.
 (pdftex.def)             Requested size: 397.48499pt x 300.60359pt.
 
-<pheme5.jpg, id=239, 803.0pt x 649.42625pt>
+<pheme5.jpg, id=247, 803.0pt x 649.42625pt>
 File: pheme5.jpg Graphic file (type jpg)
  <use pheme5.jpg>
 Package pdftex.def Info: pheme5.jpg used on input line 225.
 (pdftex.def)             Requested size: 397.48499pt x 321.47194pt.
 
-<temporal.jpg, id=240, 2045.6425pt x 1403.2425pt>
+<temporal.jpg, id=248, 2045.6425pt x 1403.2425pt>
 File: temporal.jpg Graphic file (type jpg)
  <use temporal.jpg>
 Package pdftex.def Info: temporal.jpg used on input line 227.
@@ -679,7 +679,7 @@ Overfull \hbox (2.52881pt too wide) in paragraph at lines 235--236
 -demand with
  []
 
-<fenway1.png, id=258, 794.97pt x 641.39626pt>
+<fenway1.png, id=266, 794.97pt x 641.39626pt>
 File: fenway1.png Graphic file (type png)
  <use fenway1.png>
 Package pdftex.def Info: fenway1.png used on input line 244.
@@ -689,7 +689,7 @@ File: lonely.png Graphic file (type png)
 <use lonely.png>
 Package pdftex.def Info: lonely.png used on input line 246.
 (pdftex.def)             Requested size: 397.48499pt x 297.36522pt.
- <better2.png, id=259, 302.12875pt x 428.60126pt>
+ <better2.png, id=267, 302.12875pt x 428.60126pt>
 File: better2.png Graphic file (type png)
 
 <use better2.png>
@@ -737,21 +737,15 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 276.
  (./Project_3.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 276.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 276.
-
-Package rerunfilecheck Warning: File `Project_3.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `Project_3.out':
-(rerunfilecheck)             Before: 1419F70A8D96CB61E188DB82EB68376B;1394
-(rerunfilecheck)             After:  B0491689C0151E939896E9B6A1AB970C;1536.
+Package rerunfilecheck Info: File `Project_3.out' has not changed.
+(rerunfilecheck)             Checksum: B0491689C0151E939896E9B6A1AB970C;1536.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 276.
  ) 
 Here is how much of TeX's memory you used:
- 6252 strings out of 493488
- 88964 string characters out of 3141326
+ 6254 strings out of 493488
+ 89006 string characters out of 3141326
  174179 words of memory out of 3000000
- 9389 multiletter control sequences out of 15000+200000
+ 9391 multiletter control sequences out of 15000+200000
  13573 words of font info for 52 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
  29i,10n,43p,1654b,405s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -764,10 +758,10 @@ r/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/l
 ocal/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/loca
 l/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local
 /texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Project_3.pdf (28 pages, 5369390 bytes).
+Output written on Project_3.pdf (28 pages, 5369580 bytes).
 PDF statistics:
- 348 PDF objects out of 1000 (max. 8388607)
- 289 compressed objects within 3 object streams
+ 356 PDF objects out of 1000 (max. 8388607)
+ 297 compressed objects within 3 object streams
  85 named destinations out of 1000 (max. 500000)
- 257 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 273 words of extra memory for PDF output out of 10000 (max. 10000000)
 

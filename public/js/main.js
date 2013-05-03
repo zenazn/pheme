@@ -87,20 +87,6 @@ define([
     });
 
     scrubber.draw();
-  }, 1000);
-
-  stream.on('data', function(d) {
-    var point = clustering.push(d);
-    if (!point) return;
-
-    scrubber.add(point);
-
-    point.data.marker = new map.Marker(point.pos);
-
-    tweets.push({
-      date: point.time,
-      point: point
-    });
 
     var clusters = clustering.clusters(), seen_ids = {};
 
@@ -187,6 +173,20 @@ define([
       if (k in seen_ids) return;
       markers.marker.hide();
       markers.sidebar.remove();
+    });
+  }, 1000);
+
+  stream.on('data', function(d) {
+    var point = clustering.push(d);
+    if (!point) return;
+
+    scrubber.add(point);
+
+    point.data.marker = new map.Marker(point.pos);
+
+    tweets.push({
+      date: point.time,
+      point: point
     });
   });
 });

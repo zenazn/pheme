@@ -3,12 +3,12 @@
 \contentsline {subsection}{\numberline {1.2}Goals}{2}{subsection.1.2}
 \contentsline {section}{\numberline {2}Description of Data}{3}{section.2}
 \contentsline {subsection}{\numberline {2.1}Source}{3}{subsection.2.1}
-\contentsline {subsection}{\numberline {2.2}Scraping Method}{3}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.2}Scraping Method}{4}{subsection.2.2}
 \contentsline {section}{\numberline {3}Related Work}{4}{section.3}
 \contentsline {section}{\numberline {4}Design Evolution}{5}{section.4}
-\contentsline {subsection}{\numberline {4.1}Technical Design}{6}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Visualization Evolution}{6}{subsection.4.2}
-\contentsline {subsubsection}{\numberline {4.2.1}User Flow}{6}{subsubsection.4.2.1}
+\contentsline {subsection}{\numberline {4.1}Technical Design}{7}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Visualization Evolution}{7}{subsection.4.2}
+\contentsline {subsubsection}{\numberline {4.2.1}User Flow}{7}{subsubsection.4.2.1}
 \contentsline {subsubsection}{\numberline {4.2.2}Natural Language Processing}{8}{subsubsection.4.2.2}
 \contentsline {subsubsection}{\numberline {4.2.3}Tweet Fading}{11}{subsubsection.4.2.3}
 \contentsline {subsubsection}{\numberline {4.2.4}Clustering Improvements}{14}{subsubsection.4.2.4}
@@ -16,5 +16,7 @@
 \contentsline {section}{\numberline {5}Visualizations and Discussion}{19}{section.5}
 \contentsline {subsection}{\numberline {5.1}Visualization}{19}{subsection.5.1}
 \contentsline {subsection}{\numberline {5.2}Discussion}{20}{subsection.5.2}
-\contentsline {section}{\numberline {6}Conclusion}{22}{section.6}
-\contentsline {subsection}{\numberline {6.1}Future Work}{23}{subsection.6.1}
+\contentsline {subsubsection}{\numberline {5.2.1}Improvements}{20}{subsubsection.5.2.1}
+\contentsline {subsubsection}{\numberline {5.2.2}Story Telling}{24}{subsubsection.5.2.2}
+\contentsline {section}{\numberline {6}Conclusion}{25}{section.6}
+\contentsline {subsection}{\numberline {6.1}Future Work}{25}{subsection.6.1}

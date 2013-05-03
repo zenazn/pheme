@@ -161,11 +161,13 @@ define([
 
       var el = markers.sidebar;
       el.empty();
+
+      el.append(wordCloud);
+
       cluster.points.forEach(function(point) {
         el.append(tweet_template(point.data));
       });
 
-      el.append(wordCloud);
 
       seen_ids[cluster.id] = true;
     });

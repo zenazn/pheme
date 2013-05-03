@@ -30,7 +30,6 @@ define(['d3'], function(d3) {
     y.range([height, 0]).domain([0, d3.max(hist, function(d) { return d.y })]);
 
     var xAxis = d3.svg.axis().scale(x).orient('bottom');
-    //var yAxis = d3.svg.axis().scale(y).orient('left');
 
     brush.x(x).on('brush', update);
 
@@ -57,6 +56,9 @@ define(['d3'], function(d3) {
   }
 
   function update() {
+    if (!brush.empty()) {
+      console.log(brush.extent());
+    }
     console.log('hi');
   }
 

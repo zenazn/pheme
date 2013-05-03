@@ -105,7 +105,9 @@ define([
       var color = colors[cluster.id % colors.length];
       var points = cluster.points.map(function(p) { return p.pos; });
       var center = geolib.centroid(points);
+      console.log(center);
       var radius = geolib.radius(points, center);
+      console.log(radius);
 
       var tags = nlp.frequency(cluster.points);
 

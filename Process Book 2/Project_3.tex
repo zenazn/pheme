@@ -102,7 +102,7 @@ Coming into project III, we had several specific issues we wished to address abo
 \item Let users explore pre-recorded events. 
 \end{enumerate}
 \end{enumerate}
-These issues and goals presented both significant technical and visualization design challenges. We discuss the evolution of our attempts to address them in the two subsections below. Specifically, we  address 1(a), 1(d), and 4(c) in 4.2.1, 2(a) in 4.2.2, 1(b) in 4.2.3, 1(c) in 4.2.4.
+These issues and goals presented both significant technical and visualization design challenges. We discuss the evolution of our attempts to address them in the two subsections below. Specifically, we  address 1(a), 1(d), and 2(c) in 4.2.1, 2(a) in 4.2.2, 1(b) in 4.2.3, 1(c) in 4.2.4, and 2(b) in 4.2.5.
 
 \subsection{Technical Design}
 
@@ -110,9 +110,9 @@ These issues and goals presented both significant technical and visualization de
 \subsubsection{User Flow}
 One of the biggest problems with our project II was that it was confusing to new users who did not have access to our process book. To address this issue, we decided to make a splash page explaining the key parts of our visualization, as shown below: \\ \\
 \includegraphics[width=5.5in]{splash.png} \\ \\
-In this way, we strengthen the narrative of our visualize; while our visualization does not tell a specific story (since it allows users to discover interesting stories in the world), it does this with specific progression. It \emph{opens} by loading tweets and identifying clusters; users watch as clusters form on the map. The \emph{middle} of this progression allows users to inspect individual tweets on the map by hovering over them, allowing them to understand the social data being produced in and around clusters as the clusters are identified. The \emph{closing} of our visualization allows users to  .
+In this way, we strengthen the narrative of our visualize; while our visualization does not tell a specific story (since it allows users to discover interesting stories in the world), it does this with specific progression. It \emph{opens} by loading tweets and identifying clusters; users watch as clusters form on the map. The \emph{middle} of this progression allows users to inspect individual tweets on the map by hovering over them, allowing them to understand the social data being produced in and around clusters as the clusters are identified. The \emph{closing} of our visualization allows users to learn about and explore the clusters that have been identified and the events that they represent.
 
-In addition, one of our major goals was to allow users explore pre-recorded events. This helps address one of the issues we experienced in project II; there was often insufficient live streaming twitter data in a particular locale and at a particular time (because we only get a subsample of the full Twitter firehose), and thus tweets arrived slowly. Now, our visualization is compelling to users even in such a situation, because they can use the visualization to explore events that have been pre-recorded when live data is too sparse. By clicking on the ``Watch Pre-Recorded Events" button on the page shown above, the user is brought to the following page: \\ \\
+In addition, one of our major goals in Project III was to allow users explore pre-recorded events. This helps address one of the issues we experienced in project II; there was often insufficient live streaming twitter data in a particular locale and at a particular time (because we only get a subsample of the full Twitter firehose), and thus tweets arrived slowly. Now, our visualization is compelling to users even in such a situation, because they can use the visualization to explore events that have been pre-recorded when live data is too sparse. By clicking on the ``Watch Pre-Recorded Events" button on the page shown above, the user is brought to the following page: \\ \\
 \includegraphics[width=5.5in]{splash2.png} \\ \\
 which displays a list of pre-recorded events that they can view in our visualization. 
 
@@ -148,6 +148,15 @@ This is a single person tweeting to tens or hundreds of other people asking them
 \end{enumerate}
 
 Second, we noticed that if we let our clustering algorithm run for long periods of time, the clusters we identified would continue to grow larger. This is because our original algorithm adds a new tweet to a cluster when the new tweet is close to \emph{any} of the tweets currently in the cluster. Accordingly, the larger a cluster is, the more likely it is that a new tweet will join to it; there is an unwanted snowball effect. To combat this effect while still maintaining an incremental clustering algorithm (so that our visualization would run at reasonable speeds), we included a temporal aspect to the ``closeness" metric in our clustering algorithm. In particular, when we measure how far away two tweets are, we measure their distance not only geographically, but also temporally. With this new metric, a large cluster isn't quite as likely to snowball in size, since new tweets are only ``close" to tweets in the cluster that are relatively recent. 
+
+\subsubsection{Tweet Scrubber}
+One of the major goals we had for Project III was to allow users to explore events that have been identified or pre-recorded temporally. Originally, we had two proposals for doing this. First, we considered a youtube style player, which would allow users to play back, fast forward, and rewind an event, watching tweets fall at normal speed, higher speed, or watching the tweets disappear. We envisioned it as something similar to the following:\\ \\
+\includegraphics[width=5.5in]{pheme3.jpg} \\ \\
+After some more thought, we decided that this wasn't necessarily the right paradigm for temporal exploration of an event; it did not give the user sufficient control over the viewing experience. Instead, we proposed the following: \\ \\
+\includegraphics[width=5.5in]{pheme5.jpg} \\ \\
+In this proposed visualization, the line chart below the map displays tweet frequency over time (with the x-axis encoding time). Users can brush the line chart by specifying a range of times using two scrubbers, and only tweets that fell during that time range will appear on the map. In this way, users can go through the historical stream of tweets with a fine-toothed comb, temporally, selecting exactly the time range they are interested in and investigating that range. Our final implementation of this feature is relatively similar, as shown below: \\ \\
+\includegraphics[width=5.5in]{temporal.jpg} \\ \\
+Once difference to note is that the line chart no longer displays the tweet frequency of the clusters. This is due to the fact that the temporal tweet density for a cluster is too low, so there is no useful information to be gained there. 
 
 \section{Visualizations and Discussion} 
 \subsection{Visualization}

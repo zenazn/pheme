@@ -111,19 +111,19 @@ define([
 
       // Color gradient using d3
       var wordcolor = d3.scale.linear()
-        .domain([0,1])
-        .range(["grey", color]);
+        .domain([0, 1])
+        .range(['#999', '#2980b9']);
 
       // Create simple wordcloud display element
-      var wordCloud = document.createElement("div");
-      wordCloud.className = "wordCloud";
+      var wordCloud = $('<div></div>').addClass('word-cloud');
       tags.forEach(function(word) {
-        var size = (word.value - minCount)/(maxCount - minCount) * 15 + 5;
-        var tag = document.createElement("span");
-        tag.style.fontSize = size + "px";
-        tag.style.color = wordcolor((word.value-minCount)/(maxCount-minCount));
-        tag.innerHTML = word.key;
-        wordCloud.appendChild(tag);
+        var percent = (word.value - minCount)/(maxCount - minCount);
+        var size = percent * 15 + 5;
+        var tag = $('<span></span>');
+        tag.css('font-size', size + 'px');
+        tag.css('color', wordcolor(percent));
+        tag.text(word.key);
+        wordCloud.append(tag);
       });
 
       // change color of points in cluster

@@ -22,9 +22,10 @@ define(['d3'], function(d3) {
     svg.attr('height', height + margin.top + margin.bottom);
     g.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-    var hist = d3.layout.histogram()
-      .bins(Math.ceil((d3.max(data) - d3.min(data)) / 1000)) // 1s hunks
-      (data);
+    var bins = Math.ceil((d3.max(data) - d3.min(data)) / 1000); // 1s hunks
+    // Make sure we don't have too many
+    while (bins > 2 * 60) bins /= 5;
+    var hist = d3.layout.histogram().bins(bins)(data);
 
     x.range([0, width]).domain(d3.extent(hist.map(function(d) { return d.x })));
     y.range([height, 0]).domain([0, d3.max(hist, function(d) { return d.y })]);

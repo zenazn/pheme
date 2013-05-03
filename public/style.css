@@ -75,16 +75,15 @@ html, body {
   margin: 0;
 }
 
-#sidebar .wordCloud {
+#sidebar .word-cloud {
   width: 275px;
   padding-left: 15px;
   padding-right: 10px;
-  word-wrap: break-word;
 }
 
-#sidebar .wordCloud span {
-  display: inline;
-  padding: 2px;
+#sidebar .word-cloud span {
+  display: inline-block;
+  margin-left: 3px;
 }
 
 #events .event {

@@ -69,20 +69,8 @@ define([
 
   var cluster_markers = {};
 
-  stream.on('data', function(d) {
-    var point = clustering.push(d);
-    if (!point) return;
-
-    scrubber.add(point);
-    scrubber.draw();
-
-    point.data.marker = new map.Marker(point.pos);
-
-    tweets.push({
-      date: point.time,
-      point: point
-    });
-
+  // Do periodic tasks, like fading and drawing things
+  setInterval(function() {
     // Fade and remove old tweets
     var curTime = new Date().getTime();
     tweets = tweets.filter(function(tweet) {
@@ -96,6 +84,22 @@ define([
         tweet.point.data.marker.setOpacity(opacity);
         return true;
       }
+    });
+
+    scrubber.draw();
+  }, 1000);
+
+  stream.on('data', function(d) {
+    var point = clustering.push(d);
+    if (!point) return;
+
+    scrubber.add(point);
+
+    point.data.marker = new map.Marker(point.pos);
+
+    tweets.push({
+      date: point.time,
+      point: point
     });
 
     var clusters = clustering.clusters(), seen_ids = {};

@@ -66,6 +66,13 @@ that would be visible on the user's screen. Each user needed to have their
 tweets scraped from a different live API feed, since different users can be
 visualizing different portions of the map at once.
 
+To support server-side event detection, we also continuously downloaded tweets
+from the entire globe, in much the same way as an individual views tweets. We
+downloaded tweets over the course of roughly a week and a half, totalling 23
+gigabytes of compressed tweet data (uncompressed, the data set is over 150
+gigabytes). This represents nearly 60 million tweets, and was our seed data set
+for pre-recording events on the server.
+
 One particular challenge involved with Twitter's streaming feed was that of
 authentication. Twitter protects their streaming API using OAuth, which is a
 mechanism for authenticating individual Twitter users with third party
@@ -106,6 +113,67 @@ Coming into project III, we had several specific issues that we wished to addres
 These issues and goals presented both significant technical and visualization design challenges. We discuss the evolution of our attempts to address them in the two subsections below. Specifically, we  address 1(a), 1(d), and 2(c) in 4.2.1, 2(a) in 4.2.2, 1(b) in 4.2.3, 1(c) in 4.2.4, and 2(b) in 4.2.5.
 
 \subsection{Technical Design}
+
+While the core of the idea behind our visualization is simple and
+straightforward, obtaining and processing the data required to produce a good
+visualization was surprisingly difficult. The majority of our time was therefore
+not spent producing an in-browser visualization of Tweets on a map, but instead
+was spent producing the backend infrastructure and algorithms to enable the
+visualization in the first place.
+
+\subsubsection{Clustering}
+
+At the core of our visualization is a fast incremental clustering algorithm that
+dynamically finds groups of related Tweets, based on some similarity metric (the
+details of which we talk about elsewhere). In our first iteration of the
+clustering algorithm, we naively looped through every possible pair of points,
+checking the metric to see if the two points were eligible for being in the same
+group. On every Tweet insertion, we checked it against every other Tweet,
+hierarchically grouping related tweets in a manner similar to Hierarchical
+Agglomerative Clustering (HAC) or Kruskal's algorithm for finding minimum
+spanning trees (indeed, our implementation borrows the disjoint set data
+structure used in Kruskal's algorithm). This clustering algorithm proved very
+effective in the setting of Project II, in which points incrementally arrived
+and could be clustered in $O(n\alpha(n))$ time in the number of Tweets currently
+stored, where $\alpha$, the inverse Ackerman function, comes from our
+implementation of disjoint sets.
+
+However, this algorithm was too slow to be viable for server-side event
+detection and pre-recorded events. After about 10,000 tweets (which occur over
+the space of about three minutes when downloading data at Twitter's maximum
+rate), the algorithm becomes prohibitively slow: the rate at which tweets arrive
+exceeds the rate at which we can place them into clusters. In order to enable
+pre-recorded events, a new clustering technique had to be invented.
+
+The clustering algorithm we used for this assignment exploited geographic and
+temporal locality in our metric. We noticed that there was some maximum distance
+and time at which no two Tweets that differed by more than that amount would be
+clustered together. By clustering and storing Tweets by geographical region and
+time, then, we were able to compare each incoming Tweet against a constant
+subset of Tweets, netting us an asymptotic speedup in our clustering.
+
+Traditional mechanisms to do this include kd-trees and quadtrees. However, these
+techniques are restricted to Cartesian space and are not suitable for use on a
+Sphere such as Earth. We instead invented a band-and-segment system where we
+slice the sphere first by planes of constant latitude, producing ``bands''
+around the Earth, and then into smaller quasi-square segments. So far as we
+know, this is a novel solution to sphere neighborhood generation.
+
+This new clustering algorithm allows us to cluster tweets faster than they
+arrive, and provided the technical foundation for much of our innovation in
+Project III.
+
+\subsubsection{Code Sharing}
+
+One other technical problem we encountered was the fact that we would need to
+run the same clustering algorithm on both the server and the client. Luckily we
+were running JavaScript in both the browser and the server, so were saved the
+hassle of implementing our clustering twice. However, the many differences
+between the browser and server environments meant that our code for Project III
+had to be written with great care to allow it to work in both places, and much
+of our Project II code had to be rewritten to allow it to function in multiple
+execution environments. Our use of AMD (Asynchronous Module Definition) in both
+environments and the browser-side \verb`require.js` eased this process.
 
 \subsection{Visualization Evolution}
 \subsubsection{User Flow}

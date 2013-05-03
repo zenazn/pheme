@@ -98,7 +98,7 @@ html, body {
   text-align: center;
 }
 
-#scrubber path {
+#scrubber path.data {
   fill: steelblue;
 }
 

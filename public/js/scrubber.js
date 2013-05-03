@@ -1,19 +1,20 @@
 define(['d3'], function(d3) {
   "use strict";
 
-  var el = $('#scrubber'), brush, data = [];
+  var el = $('#scrubber'), data = [];
 
   function add_data(d) {
     data.push(d.time);
   }
 
   var x = d3.time.scale(), y = d3.scale.linear();
+  var brush = d3.svg.brush();
   var svg = d3.select('#scrubber').append('svg'), g = svg.append('g');
-  var axg = g.append('g'), brg = g.append('g'), arp = g.append('path');
+  var axg = g.append('g'), arp = g.append('path'), brg = g.append('g');
 
   function draw_scrubber() {
     // Inspiration from http://bl.ocks.org/mbostock/1667367#index.html
-    var margin = {top: 10, right: 10, bottom: 30, left: 10};
+    var margin = {top: 10, right: 10, bottom: 25, left: 10};
     var width = el.width() - margin.left - margin.right;
     var height = el.height() - margin.top - margin.bottom;
 
@@ -31,7 +32,7 @@ define(['d3'], function(d3) {
     var xAxis = d3.svg.axis().scale(x).orient('bottom');
     //var yAxis = d3.svg.axis().scale(y).orient('left');
 
-    brush = d3.svg.brush().x(x).on('brush', update);
+    brush.x(x).on('brush', update);
 
     var area = d3.svg.area()
       .interpolate('monotone')
@@ -40,7 +41,7 @@ define(['d3'], function(d3) {
       .y1(function(d) { return y(d.y); });
 
 
-    arp.datum(hist).attr('d', area);
+    arp.attr('class', 'data').datum(hist).attr('d', area);
 
     axg.attr('class', 'x axis')
       .attr('transform', 'translate(0,' + height + ')')
@@ -48,7 +49,10 @@ define(['d3'], function(d3) {
 
     brg.attr('class', 'x brush')
       .attr('transform', 'translate(0,' + height + ')')
-      .call(brush);
+      .call(brush)
+    .selectAll('rect')
+      .attr('y', -height - 6)
+      .attr('height', height + 7);
 
   }
 

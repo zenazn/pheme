@@ -9,7 +9,7 @@ define([
   "use strict";
 
   var MAX_TIME = 30 * 60 * 1000; // milliseconds
-  var MAX_DIST = 250; // meters
+  var MAX_DIST = 150; // meters
   var CLUSTER_SIZE = 3;
 
   var metric = function(a, b) {

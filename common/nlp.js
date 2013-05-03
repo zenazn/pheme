@@ -15,7 +15,7 @@ define(function() {
       text = text.split(/\s+/g).map(function(word) {
         return word.replace(/\W|_/, "");
       }).filter(function(word) {
-        return (word && stopwords.indexOf(word) == -1);
+        return (word && stopwords.indexOf(word.toLowerCase()) == -1);
       }).forEach(function(word) {
         if (!(word in my_words)) {
           my_words[word] = true;

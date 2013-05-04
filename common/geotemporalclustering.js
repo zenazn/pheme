@@ -10,8 +10,7 @@ define([
 
   var GeoTemporalClustering = Clustering.extend({
     init: function(metric, max_distance, max_time, threshold) {
-      //var gtn = new GeoTemporalNeighborhood(metric, max_distance, max_time);
-      var gtn = new Neighborhood(metric);
+      var gtn = new GeoTemporalNeighborhood(metric, max_distance, max_time);
       this._super(gtn, threshold);
     },
     push: function(point) {

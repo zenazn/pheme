@@ -18,7 +18,6 @@ requirejs.config({
 define([
   'jquery',
   'common/phemeclustering',
-  'common/latlon',
   'twitterstream',
   'common/geolib',
   'map',
@@ -26,7 +25,7 @@ define([
   'scrubber',
   'handlebars',
   'bootstrap'
-], function($, PhemeClustering, LatLon, stream, geolib, map, nlp, scrubber) {
+], function($, PhemeClustering, stream, geolib, map, nlp, scrubber) {
   "use strict";
 
   var clustering = new PhemeClustering();
@@ -92,9 +91,7 @@ define([
       var color = colors[cluster.id % colors.length];
       var points = cluster.points.map(function(p) { return p.pos; });
       var center = geolib.centroid(points);
-      console.log(center);
       var radius = geolib.radius(points, center);
-      console.log(radius);
 
       var tags = nlp.frequency(cluster.points);
 
@@ -133,7 +130,7 @@ define([
 
       var markers = cluster_markers[cluster.id];
       if (!markers) {
-        console.log('new cluster', cluster);
+        //console.log('new cluster', cluster);
         markers = cluster_markers[cluster.id] = {
           marker: new map.ClusterMarker(center, radius, color),
           sidebar: $("<div></div>")

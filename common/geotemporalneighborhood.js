@@ -11,34 +11,50 @@ define([
     this.radius = radius;
     this.max_distance = max_distance;
     this.truncate = truncate;
-    this.bands = [];
     this.count = 0;
 
     var nbands = Math.ceil(Math.PI * radius / max_distance);
-    var rads_per_band = max_distance / radius;
-    for (var i = 0; i < nbands; i++) {
-      var lat_lo = i * rads_per_band - Math.PI / 2;
-      var lat_hi = Math.min((i + 1) * rads_per_band - Math.PI / 2, Math.PI / 2);
-      if (lat_hi > Math.PI / 2) throw new Error("Wut");
-      this.bands.push(new Band(this, lat_lo, lat_hi));
+    this.bands = new Array(nbands);
+  }
+  Globe.prototype.get_band_idx = function(idx) {
+    if (idx < 0 || idx >= this.bands.length) {
+      throw new Error('Band index out of range!');
     }
+    if (typeof this.bands[idx] == 'undefined') {
+      var rads = this.max_distance / this.radius;
+      var lat_lo = idx * rads - Math.PI / 2;
+      var lat_hi = Math.min((idx + 1) * rads - Math.PI / 2, Math.PI / 2);
+      this.bands[idx] = new Band(this, lat_lo, lat_hi);
+    }
+    return this.bands[idx];
+
+  };
+  Globe.prototype.get_band = function(lat) {
+    lat += Math.PI / 2;
+    var idx = Math.floor(lat * this.radius / this.max_distance);
+    return this.get_band_idx(idx);
+  };
+  Globe.prototype.get_bands = function(lat) {
+    lat += Math.PI / 2;
+    var idx = Math.floor(lat * this.radius / this.max_distance);
+    var min_idx = Math.max(0, idx - 1);
+    var max_idx = Math.min(idx + 1, this.bands.length - 1);
+    var bands = [];
+    for (var i = min_idx; i <= max_idx; i++) {
+      bands.push(this.get_band_idx(i));
+    }
+    return bands;
   }
   Globe.prototype.push = function(point) {
-    // XXX: abstraction!
-    var lat = point.pos._lat + Math.PI / 2;
-    var idx = Math.floor(lat * this.radius / this.max_distance);
-    this.bands[idx].push(point);
-    if (++this.count % 2000 == 0) {
+    this.get_band(point.pos._lat).push(point);
+    if (++this.count % 10 == 0) {
       console.log("point", this.count);
     }
   };
   Globe.prototype.forEach = function(lat, lon, start_time, cb) {
-    lat += Math.PI / 2;
-    var idx = Math.floor(lat * this.radius / this.max_distance);
-    var lo = Math.max(idx - 1, 0), hi = Math.min(idx + 1, this.bands.length - 1);
-    for (var i = lo; i <= hi; i++) {
-      this.bands[i].forEach(lon, start_time, cb);
-    }
+    this.get_bands(lat).forEach(function(band) {
+      band.forEach(lon, start_time, cb);
+    });
   };
   Globe.prototype.all = function(start_time, cb) {
     this.bands.forEach(function(band) {
@@ -50,45 +66,49 @@ define([
     this.globe = globe;
     this.lat_lo = lat_lo;
     this.lat_hi = lat_hi;
-    this.sectors = [];
 
-    // XXX: how do we know lat's are between -pi/2 and pi/2? Enforce elsewhere
     this.min_r = globe.radius * Math.min(Math.cos(lat_lo), Math.cos(lat_hi));
 
     // Typically this would be a ceiling, but the last sector is extra fat to
     // keep our invariants. This makes for odd edge conditions elsewhere
     var nsectors = Math.floor(2 * Math.PI * this.min_r / globe.max_distance);
-    for (var i = 0; i < nsectors; i++) {
-      this.sectors.push(new Sector(globe));
-    }
-    // If we're at a pole, we have one sector
-    if (nsectors == 0) {
-      this.sectors.push(new Sector(globe));
-    }
+    this.sectors = new Array(Math.max(nsectors, 1));
   }
-  Band.prototype.push = function(point) {
-    var idx = Math.floor(point.pos._lon * this.min_r / this.globe.max_distance);
+  Band.prototype.get_sector_idx = function(idx) {
+    if (idx < 0 || idx >= this.sectors.length) {
+      throw new Error('Sector index out of range!');
+    }
+    if (typeof this.sectors[idx] == 'undefined') {
+      this.sectors[idx] = new Sector(this.globe);
+    }
+    return this.sectors[idx];
+  };
+  Band.prototype.get_sector = function(lon) {
+    var idx = Math.floor(lon * this.min_r / this.globe.max_distance);
     if (idx == this.sectors.length) idx--;
-    this.sectors[idx].push(point);
+    return this.get_sector_idx(idx);
+  };
+  Band.prototype.get_sectors = function(lon) {
+    var l = this.sectors.length;
+    var idx = Math.floor(lon * this.min_r / this.globe.max_distance);
+    if (idx == l) idx--; // Last sector
+    var prev = (idx - 1 + l) % l, next = (idx + 1) % l;
+    var idxs = [prev];
+    if (idx != prev) idxs.push(idx);
+    if (next != idx && next != prev) idxs.push(next);
+    return idxs.map(this.get_sector_idx.bind(this));
+  };
+  Band.prototype.push = function(point) {
+    this.get_sector(point.pos._lon).push(point);
   };
   Band.prototype.forEach = function(lon, start_time, cb) {
     // Special case the poles
     if (this.min_r == 0) {
-      this.sectors[0].forEach(start_time, cb);
-      return;
+      return this.get_sector_idx(0).forEach(start_time, cb);
     }
-    var rads_per_band = this.globe.max_distance / this.min_r;
-    // XXX: same for lon and 0-2pi
-    var idx = Math.floor(lon * this.min_r / this.globe.max_distance);
-    if (idx == this.sectors.length) idx--; // Last sector is fat
-
-    var prev = idx - 1, next = idx + 1;
-    if (prev < 0) prev += this.sectors.length;
-    if (next >= this.sectors.length) next -= this.sectors.length;
-
-    this.sectors[prev].forEach(start_time, cb);
-    this.sectors[idx].forEach(start_time, cb);
-    this.sectors[next].forEach(start_time, cb);
+    this.get_sectors(lon).forEach(function(sector) {
+      sector.forEach(start_time, cb);
+    });
   };
   Band.prototype.all = function(start_time, cb) {
     this.sectors.forEach(function(sector) {
@@ -106,11 +126,17 @@ define([
     if (!(point instanceof GeoTemporalSet)) {
       throw new TypeError("Expected a GeoTemporalSet");
     }
+    var last = this.points[this.points.length - 1];
+    if (last && last.time > point.time) {
+      console.log("TIME WENT BACKWARDS", this, point);
+    }
     this.points.push(point);
   };
   // Special iteration semantics: return false to stop iteration
   Sector.prototype.forEach = function(start_time, cb) {
+    if (this.points.length == 0) return;
     // (Rough) binary search. Invariant: a[lo] <= el < a[hi]
+    start_time = new Date(start_time);
     var lo = 0, hi = this.points.length, mid;
     while (hi - lo > 1) {
       mid = Math.floor((hi + lo) / 2);
@@ -121,9 +147,12 @@ define([
       }
     }
 
+    var iter = 0;
     for (var i = lo; i < this.points.length; i++) {
+      iter++;
       if (!cb(this.points[i])) break;
     }
+    //console.log(lo, hi, this.points.length, iter);
 
     if (this.globe.truncate) {
       this.points = this.points.slice(lo);
@@ -148,7 +177,8 @@ define([
       this.max_distance = max_distance;
       this.max_time = max_time;
       // TODO: truncate?
-      this.globe = new Globe(EARTH_RADIUS, max_distance, true);
+      this.globe = new Globe(EARTH_RADIUS, max_distance, false);
+      console.log(this.globe);
     },
     push: function(el) {
       if (!(el instanceof GeoTemporalSet)) {
@@ -167,12 +197,18 @@ define([
         points = [];
         cb = points.push.bind(points);
       }
+      var count = 0;
       this.globe.forEach(lat, lon, start, function(point) {
         if (metric(el, point)) {
           cb(point);
         }
+        count++;
+        return true;
         return point.time <= end;
       });
+      if (typeof cb == 'undefined') {
+        return points;
+      }
     },
     forEach: function(cb) {
       this.globe.all(0, function(point) {

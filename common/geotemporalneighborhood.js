@@ -47,7 +47,7 @@ define([
   }
   Globe.prototype.push = function(point) {
     this.get_band(point.pos._lat).push(point);
-    if (++this.count % 10 == 0) {
+    if (++this.count % 200 == 0) {
       console.log("point", this.count);
     }
   };
@@ -126,17 +126,12 @@ define([
     if (!(point instanceof GeoTemporalSet)) {
       throw new TypeError("Expected a GeoTemporalSet");
     }
-    var last = this.points[this.points.length - 1];
-    if (last && last.time > point.time) {
-      console.log("TIME WENT BACKWARDS", this, point);
-    }
     this.points.push(point);
   };
   // Special iteration semantics: return false to stop iteration
   Sector.prototype.forEach = function(start_time, cb) {
     if (this.points.length == 0) return;
     // (Rough) binary search. Invariant: a[lo] <= el < a[hi]
-    start_time = new Date(start_time);
     var lo = 0, hi = this.points.length, mid;
     while (hi - lo > 1) {
       mid = Math.floor((hi + lo) / 2);
@@ -177,8 +172,7 @@ define([
       this.max_distance = max_distance;
       this.max_time = max_time;
       // TODO: truncate?
-      this.globe = new Globe(EARTH_RADIUS, max_distance, false);
-      console.log(this.globe);
+      this.globe = new Globe(EARTH_RADIUS, max_distance, true);
     },
     push: function(el) {
       if (!(el instanceof GeoTemporalSet)) {
@@ -191,19 +185,17 @@ define([
         throw new TypeError("Expected a GeoTemporalSet");
       }
       var lat = el.pos._lat, lon = el.pos._lon, metric = this.metric;
-      var start = el.time - this.max_time, end = el.time + this.max_time;
+      var start = new Date(el.time - this.max_time)
+      var end = new Date(el.time + this.max_time);
       var points;
       if (typeof cb == 'undefined') {
         points = [];
         cb = points.push.bind(points);
       }
-      var count = 0;
       this.globe.forEach(lat, lon, start, function(point) {
         if (metric(el, point)) {
           cb(point);
         }
-        count++;
-        return true;
         return point.time <= end;
       });
       if (typeof cb == 'undefined') {
